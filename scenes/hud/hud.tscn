@@ -1,0 +1,30 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/hud/hud.gd" id="1_script"]
+
+[node name="Hud" type="CanvasLayer"]
+visible = false
+layer = 15
+script = ExtResource("1_script")
+
+[node name="PlayerCount" type="Label" parent="."]
+offset_left = 40.0
+offset_top = 24.0
+offset_right = 440.0
+offset_bottom = 80.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 36
+text = "Players: 0"
+
+[node name="EnemyCount" type="Label" parent="."]
+offset_left = 40.0
+offset_top = 76.0
+offset_right = 440.0
+offset_bottom = 132.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 36
+text = "Aliens: 0"

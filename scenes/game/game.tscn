@@ -1,0 +1,14 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/game/game.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://scenes/hud/hud.tscn" id="2_hud"]
+[ext_resource type="PackedScene" path="res://scenes/quit_prompt/quit_prompt.tscn" id="3_quitprompt"]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="Screen" type="Node2D" parent="."]
+
+[node name="Hud" parent="." instance=ExtResource("2_hud")]
+
+[node name="QuitPrompt" parent="." instance=ExtResource("3_quitprompt")]

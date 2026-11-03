@@ -1,0 +1,30 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/enemies/swan/swan.gd" id="1_script"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_body"]
+radius = 59.8
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_head"]
+radius = 26.0
+
+[node name="Swan" type="Area2D"]
+collision_layer = 2
+collision_mask = 0
+monitoring = false
+script = ExtResource("1_script")
+ground_speed = 40.0
+max_energy = 8
+radius = 104.0
+min_rocket_interval = 2.5
+max_rocket_interval = 4.0
+rocket_speed = 280.0
+rocket_look = 3
+
+[node name="Body" type="CollisionShape2D" parent="."]
+position = Vector2(0, 13)
+shape = SubResource("CircleShape2D_body")
+
+[node name="Head" type="CollisionShape2D" parent="."]
+position = Vector2(10.4, -52)
+shape = SubResource("CircleShape2D_head")

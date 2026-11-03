@@ -1,0 +1,64 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/levels/base/base.tscn" id="1_base"]
+[ext_resource type="Shader" path="res://scenes/levels/base/space.gdshader" id="2_space"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/slime/slime.tscn" id="3_slime"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/puffer/puffer.tscn" id="4_puffer"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/orbiter/orbiter.tscn" id="5_orbiter"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/jelly/jelly.tscn" id="6_jelly"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/zipper/zipper.tscn" id="7_zipper"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/mothership/mothership.tscn" id="8_mothership"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_teal"]
+shader = ExtResource("2_space")
+shader_parameter/deep_color = Color(0, 0.02, 0.045, 1)
+shader_parameter/nebula_color = Color(0.05, 0.28, 0.36, 1)
+shader_parameter/nebula_color_2 = Color(0.08, 0.3, 0.14, 1)
+shader_parameter/nebula_strength = 0.32
+shader_parameter/nebula_scale = 620.0
+shader_parameter/planet_center = Vector2(1560, 280)
+shader_parameter/planet_radius = 120.0
+shader_parameter/planet_color = Color(0.14, 0.19, 0.3, 1)
+shader_parameter/planet_ring_color = Color(0.22, 0.2, 0.15, 1)
+
+[node name="Second" instance=ExtResource("1_base")]
+
+[node name="Stars" parent="."]
+material = SubResource("ShaderMaterial_teal")
+
+[node name="ChestDrops" parent="."]
+enabled = true
+
+[node name="Wave1Slime1" parent="Enemies" index="0" instance=ExtResource("3_slime")]
+position = Vector2(700, 240)
+
+[node name="Wave1Slime2" parent="Enemies" index="1" instance=ExtResource("3_slime")]
+position = Vector2(1220, 240)
+entry_delay = 0.5
+
+[node name="Wave2Puffer1" parent="Enemies" index="2" instance=ExtResource("4_puffer")]
+position = Vector2(600, 0)
+entry_delay = 9
+
+[node name="Wave2Puffer2" parent="Enemies" index="3" instance=ExtResource("4_puffer")]
+position = Vector2(1320, 0)
+entry_delay = 9.5
+
+[node name="Wave3Slime" parent="Enemies" index="4" instance=ExtResource("3_slime")]
+position = Vector2(960, 260)
+entry_delay = 18
+
+[node name="Wave3Puffer" parent="Enemies" index="5" instance=ExtResource("4_puffer")]
+position = Vector2(500, 0)
+entry_delay = 18.5
+
+[node name="Wave4Jelly" parent="Enemies" index="6" instance=ExtResource("6_jelly")]
+position = Vector2(960, 260)
+entry_delay = 28
+
+[node name="Wave4Zipper1" parent="Enemies" index="7" instance=ExtResource("7_zipper")]
+position = Vector2(500, 240)
+entry_delay = 28.5
+
+[node name="Mothership" parent="Enemies" index="8" instance=ExtResource("8_mothership")]
+position = Vector2(960, 240)

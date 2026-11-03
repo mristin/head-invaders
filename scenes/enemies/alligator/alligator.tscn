@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/enemies/alligator/alligator.gd" id="1_script"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_body"]
+radius = 22.0
+height = 150.0
+
+[node name="Alligator" type="Area2D"]
+collision_layer = 2
+collision_mask = 0
+monitoring = false
+script = ExtResource("1_script")
+max_energy = 6
+radius = 100.0
+ground_speed = 40.0
+min_rocket_interval = 2.5
+max_rocket_interval = 4.0
+rocket_speed = 320.0
+rocket_look = 3
+drop_chance = 0.3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_body")

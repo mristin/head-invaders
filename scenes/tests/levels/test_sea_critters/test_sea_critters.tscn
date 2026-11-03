@@ -1,0 +1,32 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/levels/base/base.tscn" id="1_base"]
+[ext_resource type="Shader" path="res://scenes/levels/fourth/ocean.gdshader" id="2_ocean"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/shark/shark.tscn" id="3_shark"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/jellyfish/jellyfish.tscn" id="4_jellyfish"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/octopus/octopus.tscn" id="5_octopus"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ocean"]
+shader = ExtResource("2_ocean")
+
+[node name="TestSeaCritters" instance=ExtResource("1_base")]
+
+[node name="Stars" parent="."]
+material = SubResource("ShaderMaterial_ocean")
+
+[node name="SupplyDrops" parent="."]
+enabled = false
+
+[node name="Shark" parent="Enemies" index="0" instance=ExtResource("3_shark")]
+position = Vector2(960, 300)
+drop_chance = 0.0
+
+[node name="Jellyfish" parent="Enemies" index="1" instance=ExtResource("4_jellyfish")]
+position = Vector2(700, 0)
+entry_delay = 1.0
+drop_chance = 0.0
+
+[node name="Octopus" parent="Enemies" index="2" instance=ExtResource("5_octopus")]
+position = Vector2(1300, 240)
+entry_delay = 2.0
+drop_chance = 0.0

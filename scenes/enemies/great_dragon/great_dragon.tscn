@@ -1,0 +1,32 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/enemies/great_dragon/great_dragon.gd" id="1_script"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_body"]
+radius = 108.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_head"]
+radius = 54.0
+
+[node name="GreatDragon" type="Area2D"]
+collision_layer = 2
+collision_mask = 0
+monitoring = false
+script = ExtResource("1_script")
+max_energy = 240
+radius = 270.0
+waits_for_others = true
+entry_delay = 2.0
+min_rocket_interval = 2.0
+max_rocket_interval = 2.8
+rocket_speed = 430.0
+rocket_look = 7
+drop_chance = 1.0
+
+[node name="Body" type="CollisionShape2D" parent="."]
+position = Vector2(0, -22)
+shape = SubResource("CircleShape2D_body")
+
+[node name="Head" type="CollisionShape2D" parent="."]
+position = Vector2(0, 86)
+shape = SubResource("CircleShape2D_head")

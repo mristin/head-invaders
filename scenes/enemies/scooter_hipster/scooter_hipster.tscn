@@ -1,0 +1,22 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/enemies/scooter_hipster/scooter_hipster.gd" id="1_script"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rider"]
+radius = 44.2
+height = 156.0
+
+[node name="ScooterHipster" type="Area2D"]
+collision_layer = 2
+collision_mask = 0
+monitoring = false
+script = ExtResource("1_script")
+max_energy = 7
+radius = 104.0
+min_rocket_interval = 1.8
+max_rocket_interval = 3.2
+rocket_speed = 320.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -15.6)
+shape = SubResource("CapsuleShape2D_rider")

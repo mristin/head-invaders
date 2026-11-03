@@ -1,0 +1,10 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/levels/base/base.tscn" id="1_base"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/mothership/mothership.tscn" id="2_mothership"]
+
+[node name="TestMothership" instance=ExtResource("1_base")]
+
+[node name="Mothership" parent="Enemies" index="0" instance=ExtResource("2_mothership")]
+position = Vector2(960, 240)
+entry_delay = 0.5

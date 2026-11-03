@@ -1,0 +1,64 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/levels/base/base.tscn" id="1_base"]
+[ext_resource type="Shader" path="res://scenes/levels/ninth/alps.gdshader" id="2_alps"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/bell_cow/bell_cow.tscn" id="3_bell_cow"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/yodeler/yodeler.tscn" id="4_yodeler"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/marmot/marmot.tscn" id="5_marmot"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/gondola/gondola.tscn" id="6_gondola"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/cuckoo_clock/cuckoo_clock.tscn" id="7_cuckoo_clock"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_alps"]
+shader = ExtResource("2_alps")
+
+[node name="Ninth" instance=ExtResource("1_base")]
+
+[node name="Stars" parent="."]
+material = SubResource("ShaderMaterial_alps")
+
+[node name="ChestDrops" parent="."]
+enabled = true
+styles = Array[int]([0, 2, 3])
+first_delay = 10.0
+
+[node name="Wave1BellCow" parent="Enemies" index="0" instance=ExtResource("3_bell_cow")]
+position = Vector2(700, 0)
+
+[node name="Wave1Yodeler" parent="Enemies" index="1" instance=ExtResource("4_yodeler")]
+position = Vector2(1250, 250)
+entry_delay = 1.5
+
+[node name="Wave2Marmot" parent="Enemies" index="2" instance=ExtResource("5_marmot")]
+position = Vector2(1150, 0)
+entry_delay = 13
+
+[node name="Wave2Gondola" parent="Enemies" index="3" instance=ExtResource("6_gondola")]
+position = Vector2(700, 300)
+entry_delay = 14
+
+[node name="Wave3BellCow" parent="Enemies" index="4" instance=ExtResource("3_bell_cow")]
+position = Vector2(1300, 0)
+entry_delay = 26
+
+[node name="Wave3Marmot" parent="Enemies" index="5" instance=ExtResource("5_marmot")]
+position = Vector2(620, 0)
+entry_delay = 27
+
+[node name="Wave4Gondola" parent="Enemies" index="6" instance=ExtResource("6_gondola")]
+position = Vector2(1250, 330)
+entry_delay = 38
+
+[node name="Wave4Yodeler" parent="Enemies" index="7" instance=ExtResource("4_yodeler")]
+position = Vector2(700, 230)
+entry_delay = 39
+
+[node name="Wave5Marmot" parent="Enemies" index="8" instance=ExtResource("5_marmot")]
+position = Vector2(800, 0)
+entry_delay = 50
+
+[node name="Wave5Yodeler" parent="Enemies" index="9" instance=ExtResource("4_yodeler")]
+position = Vector2(1250, 240)
+entry_delay = 51
+
+[node name="CuckooClock" parent="Enemies" index="10" instance=ExtResource("7_cuckoo_clock")]
+position = Vector2(960, 290)

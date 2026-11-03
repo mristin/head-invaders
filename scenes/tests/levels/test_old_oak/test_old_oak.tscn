@@ -1,0 +1,17 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/levels/base/base.tscn" id="1_base"]
+[ext_resource type="Shader" path="res://scenes/levels/third/forest.gdshader" id="2_forest"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/old_oak/old_oak.tscn" id="3_old_oak"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_forest"]
+shader = ExtResource("2_forest")
+
+[node name="TestOldOak" instance=ExtResource("1_base")]
+
+[node name="Stars" parent="."]
+material = SubResource("ShaderMaterial_forest")
+
+[node name="OldOak" parent="Enemies" index="0" instance=ExtResource("3_old_oak")]
+position = Vector2(960, 300)
+entry_delay = 0.5

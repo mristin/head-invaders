@@ -1,0 +1,18 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/levels/base/base.tscn" id="1_base"]
+[ext_resource type="Shader" path="res://scenes/levels/sixth/desert.gdshader" id="2_desert"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/great_scarab/great_scarab.tscn" id="3_great_scarab"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_desert"]
+shader = ExtResource("2_desert")
+
+[node name="TestGreatScarab" instance=ExtResource("1_base")]
+
+[node name="Stars" parent="."]
+material = SubResource("ShaderMaterial_desert")
+
+[node name="GreatScarab" parent="Enemies" index="0" instance=ExtResource("3_great_scarab")]
+position = Vector2(960, 210)
+entry_delay = 0.5
+max_energy = 110

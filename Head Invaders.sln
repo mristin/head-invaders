@@ -1,0 +1,30 @@
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Head Invaders", "Head Invaders.csproj", "{7A3E5C2B-4D1F-4B8E-9C6A-2F0D8E1B5A74}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{4182C6DF-0B7F-43FC-8C6C-090FC616F7D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeadInvaders.Tests", "tests\HeadInvaders.Tests\HeadInvaders.Tests.csproj", "{841104F0-3CC2-4A41-9EA5-FEF2E748B0AF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		ExportDebug|Any CPU = ExportDebug|Any CPU
+		ExportRelease|Any CPU = ExportRelease|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7A3E5C2B-4D1F-4B8E-9C6A-2F0D8E1B5A74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A3E5C2B-4D1F-4B8E-9C6A-2F0D8E1B5A74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A3E5C2B-4D1F-4B8E-9C6A-2F0D8E1B5A74}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
+		{7A3E5C2B-4D1F-4B8E-9C6A-2F0D8E1B5A74}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
+		{7A3E5C2B-4D1F-4B8E-9C6A-2F0D8E1B5A74}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
+		{7A3E5C2B-4D1F-4B8E-9C6A-2F0D8E1B5A74}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
+		{841104F0-3CC2-4A41-9EA5-FEF2E748B0AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{841104F0-3CC2-4A41-9EA5-FEF2E748B0AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{841104F0-3CC2-4A41-9EA5-FEF2E748B0AF}.ExportDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{841104F0-3CC2-4A41-9EA5-FEF2E748B0AF}.ExportRelease|Any CPU.ActiveCfg = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{841104F0-3CC2-4A41-9EA5-FEF2E748B0AF} = {4182C6DF-0B7F-43FC-8C6C-090FC616F7D1}
+	EndGlobalSection
+EndGlobal

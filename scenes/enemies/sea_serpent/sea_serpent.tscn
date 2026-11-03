@@ -1,0 +1,24 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/enemies/sea_serpent/sea_serpent.gd" id="1_script"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_head"]
+radius = 46.0
+
+[node name="SeaSerpent" type="Area2D"]
+collision_layer = 2
+collision_mask = 0
+monitoring = false
+script = ExtResource("1_script")
+max_energy = 260
+radius = 120.0
+waits_for_others = true
+entry_delay = 2.0
+min_rocket_interval = 1.8
+max_rocket_interval = 2.6
+rocket_speed = 360.0
+rocket_look = 3
+drop_chance = 1.0
+
+[node name="Head" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_head")

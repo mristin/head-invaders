@@ -1,0 +1,49 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/levels/base/base.tscn" id="1_base"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/saucer/saucer.tscn" id="2_saucer"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/dart/dart.tscn" id="3_dart"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/jelly/jelly.tscn" id="4_jelly"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/orbiter/orbiter.tscn" id="5_orbiter"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/zipper/zipper.tscn" id="6_zipper"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/queen/queen.tscn" id="7_queen"]
+
+[node name="First" instance=ExtResource("1_base")]
+
+[node name="Wave1Saucer1" parent="Enemies" index="0" instance=ExtResource("2_saucer")]
+position = Vector2(640, 200)
+
+[node name="Wave1Saucer2" parent="Enemies" index="1" instance=ExtResource("2_saucer")]
+position = Vector2(1280, 200)
+entry_delay = 0.5
+
+[node name="Wave2Dart1" parent="Enemies" index="2" instance=ExtResource("3_dart")]
+position = Vector2(480, 0)
+entry_delay = 7
+
+[node name="Wave2Dart3" parent="Enemies" index="3" instance=ExtResource("3_dart")]
+position = Vector2(1440, 0)
+entry_delay = 8
+
+[node name="Wave3Jelly" parent="Enemies" index="4" instance=ExtResource("4_jelly")]
+position = Vector2(960, 260)
+entry_delay = 15
+
+[node name="Wave4Orbiter1" parent="Enemies" index="5" instance=ExtResource("5_orbiter")]
+position = Vector2(560, 300)
+entry_delay = 22
+
+[node name="Wave4Orbiter2" parent="Enemies" index="6" instance=ExtResource("5_orbiter")]
+position = Vector2(1360, 300)
+entry_delay = 22.5
+
+[node name="Wave5Zipper1" parent="Enemies" index="7" instance=ExtResource("6_zipper")]
+position = Vector2(480, 260)
+entry_delay = 30
+
+[node name="Wave5Zipper3" parent="Enemies" index="8" instance=ExtResource("6_zipper")]
+position = Vector2(1440, 260)
+entry_delay = 30.8
+
+[node name="Queen" parent="Enemies" index="9" instance=ExtResource("7_queen")]
+position = Vector2(960, 250)

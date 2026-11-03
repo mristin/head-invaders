@@ -1,0 +1,23 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/enemies/lizard/lizard.gd" id="1_script"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_body"]
+radius = 32.0
+
+[node name="Lizard" type="Area2D"]
+collision_layer = 2
+collision_mask = 0
+monitoring = false
+script = ExtResource("1_script")
+max_energy = 3
+radius = 100.0
+ground_speed = 40.0
+min_rocket_interval = 1.8
+max_rocket_interval = 3.0
+rocket_speed = 380.0
+rocket_look = 7
+drop_chance = 0.3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_body")

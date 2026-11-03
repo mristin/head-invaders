@@ -1,0 +1,6 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/tests/mouse_heads/mouse_heads.gd" id="1_script"]
+
+[node name="MouseHeads" type="Node2D"]
+script = ExtResource("1_script")

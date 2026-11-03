@@ -1,0 +1,21 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/levels/base/base.tscn" id="1_base"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/dart/dart.tscn" id="3_dart"]
+
+[node name="TestDart" instance=ExtResource("1_base")]
+
+[node name="SupplyDrops" parent="."]
+enabled = false
+
+[node name="Dart1" parent="Enemies" index="0" instance=ExtResource("3_dart")]
+position = Vector2(600, 0)
+entry_delay = 0
+
+[node name="Dart2" parent="Enemies" index="1" instance=ExtResource("3_dart")]
+position = Vector2(960, 0)
+entry_delay = 1.5
+
+[node name="Dart3" parent="Enemies" index="2" instance=ExtResource("3_dart")]
+position = Vector2(1320, 0)
+entry_delay = 3

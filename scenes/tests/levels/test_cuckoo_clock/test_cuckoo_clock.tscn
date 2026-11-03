@@ -1,0 +1,17 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/levels/base/base.tscn" id="1_base"]
+[ext_resource type="Shader" path="res://scenes/levels/ninth/alps.gdshader" id="2_alps"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/cuckoo_clock/cuckoo_clock.tscn" id="3_cuckoo_clock"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_alps"]
+shader = ExtResource("2_alps")
+
+[node name="TestCuckooClock" instance=ExtResource("1_base")]
+
+[node name="Stars" parent="."]
+material = SubResource("ShaderMaterial_alps")
+
+[node name="CuckooClock" parent="Enemies" index="0" instance=ExtResource("3_cuckoo_clock")]
+position = Vector2(960, 290)
+entry_delay = 0.5

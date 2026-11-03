@@ -1,0 +1,29 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/levels/base/base.tscn" id="1_base"]
+[ext_resource type="PackedScene" path="res://scenes/levels/tenth/zurich_map.tscn" id="2_map"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/scooter_hipster/scooter_hipster.tscn" id="3_hipster"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/punk/punk.tscn" id="4_punk"]
+
+[node name="TestHipsterPunk" instance=ExtResource("1_base")]
+
+[node name="Space" parent="."]
+color = Color(0.105, 0.11, 0.125, 1)
+
+[node name="Stars" parent="."]
+visible = false
+
+[node name="ZurichMap" parent="." instance=ExtResource("2_map")]
+start_distance = 2600.0
+
+[node name="SupplyDrops" parent="."]
+enabled = false
+
+[node name="ScooterHipster" parent="Enemies" index="0" instance=ExtResource("3_hipster")]
+position = Vector2(1300, 250)
+drop_chance = 0.0
+
+[node name="Punk" parent="Enemies" index="1" instance=ExtResource("4_punk")]
+position = Vector2(700, 360)
+entry_delay = 1.0
+drop_chance = 0.0

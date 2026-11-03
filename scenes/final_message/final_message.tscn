@@ -1,0 +1,64 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/final_message/final_message.gd" id="1_script"]
+[ext_resource type="Script" path="res://scenes/select_camera/spinner.gd" id="2_spinner"]
+
+[node name="FinalMessage" type="CanvasLayer"]
+layer = 18
+script = ExtResource("1_script")
+
+[node name="Image" type="TextureRect" parent="."]
+offset_right = 1920.0
+offset_bottom = 1080.0
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Title" type="Label" parent="."]
+offset_top = 90.0
+offset_right = 1920.0
+offset_bottom = 260.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.29, 0.17, 0.36, 1)
+theme_override_constants/outline_size = 24
+theme_override_font_sizes/font_size = 140
+text = "Great job!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Subtitle" type="Label" parent="."]
+offset_left = 120.0
+offset_top = 260.0
+offset_right = 1800.0
+offset_bottom = 420.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.29, 0.17, 0.36, 1)
+theme_override_constants/outline_size = 14
+theme_override_font_sizes/font_size = 52
+text = "The aliens flew away."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Counter" type="Label" parent="."]
+offset_left = 1720.0
+offset_top = 930.0
+offset_right = 1800.0
+offset_bottom = 1010.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.29, 0.17, 0.36, 1)
+theme_override_constants/outline_size = 12
+theme_override_font_sizes/font_size = 56
+text = "5"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Spinner" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 1715.0
+offset_top = 925.0
+offset_right = 1805.0
+offset_bottom = 1015.0
+script = ExtResource("2_spinner")
+rotation_speed = 0.0
+line_width = 8.0

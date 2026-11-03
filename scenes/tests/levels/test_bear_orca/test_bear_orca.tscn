@@ -1,0 +1,26 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/levels/base/base.tscn" id="1_base"]
+[ext_resource type="Shader" path="res://scenes/levels/seventh/arctic.gdshader" id="2_arctic"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/polar_bear/polar_bear.tscn" id="3_polar_bear"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/orca/orca.tscn" id="4_orca"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_arctic"]
+shader = ExtResource("2_arctic")
+
+[node name="TestBearOrca" instance=ExtResource("1_base")]
+
+[node name="Stars" parent="."]
+material = SubResource("ShaderMaterial_arctic")
+
+[node name="SupplyDrops" parent="."]
+enabled = false
+
+[node name="PolarBear" parent="Enemies" index="0" instance=ExtResource("3_polar_bear")]
+position = Vector2(700, 0)
+margin = 450.0
+
+[node name="Orca" parent="Enemies" index="1" instance=ExtResource("4_orca")]
+position = Vector2(1250, 0)
+entry_delay = 1.0
+margin = 450.0

@@ -1,0 +1,168 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/select_camera/select_camera.gd" id="1_script"]
+[ext_resource type="Script" path="res://scenes/select_camera/spinner.gd" id="2_spinner"]
+[ext_resource type="Shader" path="res://scenes/levels/base/space.gdshader" id="3_space"]
+[ext_resource type="Texture2D" path="res://icon.svg" id="4_icon"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_space"]
+shader = ExtResource("3_space")
+
+[node name="SelectCamera" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Stars" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_space")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Icon" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -130.0
+offset_top = 40.0
+offset_right = 130.0
+offset_bottom = 300.0
+grow_horizontal = 2
+texture = ExtResource("4_icon")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 300.0
+offset_bottom = 440.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 0.88, 0.35, 1)
+theme_override_colors/font_outline_color = Color(0.29, 0.17, 0.36, 1)
+theme_override_constants/outline_size = 24
+theme_override_font_sizes/font_size = 120
+text = "Head Invaders"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Story" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 160.0
+offset_top = 450.0
+offset_right = -160.0
+offset_bottom = 620.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.29, 0.17, 0.36, 1)
+theme_override_constants/outline_size = 12
+theme_override_font_sizes/font_size = 44
+text = "Oh no! Bad dreams have invaded your head! Jump into your spaceship and chase them away, through ten worlds, all the way home to Zurich."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="HowToPlay" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 160.0
+offset_top = 630.0
+offset_right = -160.0
+offset_bottom = 730.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.6, 0.9, 1, 1)
+theme_override_colors/font_outline_color = Color(0.1, 0.12, 0.3, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 36
+text = "Stand in front of the camera and move your head to fly. Your spaceship shoots all by itself. Friends can join any time!"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Status" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -600.0
+offset_top = 220.0
+offset_right = 600.0
+offset_bottom = 300.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 36
+text = "Setting up the camera server..."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Spinner" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = 310.0
+offset_right = 24.0
+offset_bottom = 358.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_spinner")
+
+[node name="SelectionPart" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = 230.0
+offset_bottom = 230.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CameraOption" type="OptionButton" parent="SelectionPart"]
+layout_mode = 0
+offset_left = -300.0
+offset_top = 0.0
+offset_right = 300.0
+offset_bottom = 48.0
+theme_override_font_sizes/font_size = 24
+
+[node name="StartButton" type="Button" parent="SelectionPart"]
+layout_mode = 0
+offset_left = -80.0
+offset_top = 80.0
+offset_right = 80.0
+offset_bottom = 140.0
+theme_override_font_sizes/font_size = 28
+text = "Start"
+
+[connection signal="pressed" from="SelectionPart/StartButton" to="." method="_on_start_button_pressed"]

@@ -1,0 +1,26 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/levels/base/base.tscn" id="1_base"]
+[ext_resource type="Shader" path="res://scenes/levels/fourth/ocean.gdshader" id="2_ocean"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/alligator/alligator.tscn" id="3_alligator"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/clam/clam.tscn" id="4_clam"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ocean"]
+shader = ExtResource("2_ocean")
+
+[node name="TestGatorClam" instance=ExtResource("1_base")]
+
+[node name="Stars" parent="."]
+material = SubResource("ShaderMaterial_ocean")
+
+[node name="SupplyDrops" parent="."]
+enabled = false
+
+[node name="Alligator" parent="Enemies" index="0" instance=ExtResource("3_alligator")]
+position = Vector2(700, 0)
+drop_chance = 0.0
+margin = 450.0
+
+[node name="Clam" parent="Enemies" index="1" instance=ExtResource("4_clam")]
+position = Vector2(1250, 0)
+entry_delay = 1.0

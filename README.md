@@ -2,18 +2,24 @@
 
 ![Playing Head Invaders: the spaceship follows the player's head, seen through the webcam](docs/gameplay.gif)
 
-Head Invaders is a video game for children which they play with their whole body instead of sitting still with a controller.
-Bad dreams have invaded the players' heads, and the players chase them away through ten worlds, from outer space over forests, seas, lava, deserts, ice, the sky and the Swiss Alps all the way home to Zurich.
-The game watches the players through a webcam: each player in front of the camera gets a spaceship, which follows their head.
-To fly, the children move: they step left and right, duck and stretch up to dodge the projectiles, catch the falling boosters and shoot open the treasure chests.
-The spaceships fire all by themselves, so there are no buttons to learn, and friends can join or leave at any time just by stepping in front of the camera or away from it.
-That way, the children get the fun of a video game without the drawbacks of sitting for a long time without moving.
-Nothing in the game is violent: the defeated creatures only get dizzy and fly home, and a spaceship which runs out of shield just tries the level again.
+**Head Invaders is a free video game for children which they play by moving their whole body in front of a webcam, instead of sitting still with a controller.**
+
+Each player in front of the camera gets a spaceship, which follows their head.
+To fly, you move: step left and right, duck and stretch up to dodge the projectiles, and catch the falling boosters.
+The spaceships fire all by themselves, so there are no buttons to learn.
+Friends can join or leave at any time, just by stepping in front of the camera or away from it.
+
+Bad dreams have invaded your head, and you chase them away through ten worlds: from outer space over the forest, the sea, the lava, the desert, the ice, the sky and the Swiss Alps all the way home to Zurich.
+Each world has its own creatures, treasure chests to shoot open, and a big boss at the end.
+
+The game is made for children.
+Nothing in it is violent: the defeated creatures only get dizzy and fly home, and a spaceship which runs out of shield simply tries the level again.
+Everything is big and bright, so that you can play on a laptop from a couple of meters away.
 
 **No network access.**
 The game runs entirely on your computer and works offline.
 It never connects to any server: the webcam images are processed locally, in memory, and are never saved or sent anywhere.
-There are no accounts, no ads, no analytics and no telemetry; we even switch off the telemetry events of ONNX Runtime, the library which runs the head-tracking models.
+There are no accounts, no ads, no analytics and no telemetry.
 
 ## Download
 

@@ -67,11 +67,16 @@ jobs:
           cp -r "${{ runner.temp }}/godot/templates/." "$templates_dir/"
 
       - name: Determine the version
+        # NOTE (mristin):
+        # Do not call the variable VERSION! MSBuild picks up the environment
+        # variables as properties (case-insensitively), so VERSION would override
+        # the project version, and dotnet restore fails on tags such as 1.0.0rc1
+        # that are not valid NuGet versions.
         run: |
           if [ "${{ github.event_name }}" = "release" ]; then
-            echo "VERSION=${{ github.event.release.tag_name }}" >> "$GITHUB_ENV"
+            echo "PACKAGE_VERSION=${{ github.event.release.tag_name }}" >> "$GITHUB_ENV"
           else
-            echo "VERSION=$(git rev-parse --short HEAD)" >> "$GITHUB_ENV"
+            echo "PACKAGE_VERSION=$(git rev-parse --short HEAD)" >> "$GITHUB_ENV"
           fi
 
       - name: Restore and import
@@ -112,22 +117,22 @@ jobs:
           mkdir -p dist
           cp -r notices/. build/linux/
           cp -r notices/. build/windows/
-          (cd build/linux && zip -q -r "../../dist/head-invaders-${VERSION}-linux-x86_64.zip" .)
-          (cd build/windows && zip -q -r "../../dist/head-invaders-${VERSION}-windows-x86_64.zip" .)
+          (cd build/linux && zip -q -r "../../dist/head-invaders-${PACKAGE_VERSION}-linux-x86_64.zip" .)
+          (cd build/windows && zip -q -r "../../dist/head-invaders-${PACKAGE_VERSION}-windows-x86_64.zip" .)
 
           # NOTE (mristin):
           # Godot packs the macOS app as a zip already. Godot builds a universal
           # app, but ONNX Runtime ships its native library only for Apple Silicon,
           # so the head tracking does not work on Intel Macs.
-          cp build/macos/head-invaders.zip "dist/head-invaders-${VERSION}-macos-apple-silicon.zip"
-          (cd notices && zip -q -r "../dist/head-invaders-${VERSION}-macos-apple-silicon.zip" .)
+          cp build/macos/head-invaders.zip "dist/head-invaders-${PACKAGE_VERSION}-macos-apple-silicon.zip"
+          (cd notices && zip -q -r "../dist/head-invaders-${PACKAGE_VERSION}-macos-apple-silicon.zip" .)
 
           ls -l dist
 
       - name: Upload the packages as artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: head-invaders-${{ env.VERSION }}
+          name: head-invaders-${{ env.PACKAGE_VERSION }}
           path: dist/*
 
       - name: Attach the packages to the release

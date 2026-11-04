@@ -1,0 +1,17 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/levels/base/base.tscn" id="1_base"]
+[ext_resource type="Shader" path="res://scenes/levels/fifth/lava.gdshader" id="2_lava"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/great_dragon/great_dragon.tscn" id="3_great_dragon"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lava"]
+shader = ExtResource("2_lava")
+
+[node name="TestGreatDragon" instance=ExtResource("1_base")]
+
+[node name="Stars" parent="."]
+material = SubResource("ShaderMaterial_lava")
+
+[node name="GreatDragon" parent="Enemies" index="0" instance=ExtResource("3_great_dragon")]
+position = Vector2(960, 290)
+entry_delay = 0.5

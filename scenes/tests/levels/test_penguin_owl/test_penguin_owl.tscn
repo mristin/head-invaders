@@ -1,0 +1,24 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/levels/base/base.tscn" id="1_base"]
+[ext_resource type="Shader" path="res://scenes/levels/seventh/arctic.gdshader" id="2_arctic"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/penguin/penguin.tscn" id="3_penguin"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/snowy_owl/snowy_owl.tscn" id="4_snowy_owl"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_arctic"]
+shader = ExtResource("2_arctic")
+
+[node name="TestPenguinOwl" instance=ExtResource("1_base")]
+
+[node name="Stars" parent="."]
+material = SubResource("ShaderMaterial_arctic")
+
+[node name="SupplyDrops" parent="."]
+enabled = false
+
+[node name="Penguin" parent="Enemies" index="0" instance=ExtResource("3_penguin")]
+position = Vector2(700, 0)
+
+[node name="SnowyOwl" parent="Enemies" index="1" instance=ExtResource("4_snowy_owl")]
+position = Vector2(1250, 250)
+entry_delay = 1.0

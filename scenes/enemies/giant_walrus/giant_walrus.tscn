@@ -1,0 +1,33 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/enemies/giant_walrus/giant_walrus.gd" id="1_script"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_body"]
+radius = 110.0
+height = 290.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_head"]
+radius = 75.0
+
+[node name="GiantWalrus" type="Area2D"]
+collision_layer = 2
+collision_mask = 0
+monitoring = false
+script = ExtResource("1_script")
+max_energy = 240
+radius = 260.0
+waits_for_others = true
+entry_delay = 2.0
+min_rocket_interval = 2.0
+max_rocket_interval = 2.8
+rocket_speed = 330.0
+drop_chance = 1.0
+
+[node name="Body" type="CollisionShape2D" parent="."]
+position = Vector2(0, -15)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_body")
+
+[node name="Head" type="CollisionShape2D" parent="."]
+position = Vector2(0, 45)
+shape = SubResource("CircleShape2D_head")

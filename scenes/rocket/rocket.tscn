@@ -1,0 +1,17 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/rocket/rocket.gd" id="1_script"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rocket"]
+radius = 7.0
+height = 38.0
+
+[node name="Rocket" type="Area2D"]
+collision_layer = 8
+collision_mask = 1
+monitorable = false
+script = ExtResource("1_script")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_rocket")

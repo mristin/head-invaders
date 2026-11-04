@@ -1,0 +1,19 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/levels/base/base.tscn" id="1_base"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/slime/slime.tscn" id="2_slime"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/puffer/puffer.tscn" id="3_puffer"]
+
+[node name="TestSlimePuffer" instance=ExtResource("1_base")]
+
+[node name="SupplyDrops" parent="."]
+enabled = false
+
+[node name="Slime" parent="Enemies" index="0" instance=ExtResource("2_slime")]
+position = Vector2(760, 260)
+drop_chance = 0.0
+
+[node name="Puffer" parent="Enemies" index="1" instance=ExtResource("3_puffer")]
+position = Vector2(1300, 0)
+entry_delay = 1.0
+drop_chance = 0.0

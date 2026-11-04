@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/enemies/cactus/cactus.gd" id="1_script"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_body"]
+radius = 40.0
+height = 110.0
+
+[node name="Cactus" type="Area2D"]
+collision_layer = 2
+collision_mask = 0
+monitoring = false
+script = ExtResource("1_script")
+max_energy = 6
+radius = 90.0
+min_rocket_interval = 3.5
+max_rocket_interval = 5.0
+rocket_speed = 300.0
+drop_chance = 0.3
+ground_speed = 40.0
+fire_above = 0.55
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -6)
+shape = SubResource("CapsuleShape2D_body")

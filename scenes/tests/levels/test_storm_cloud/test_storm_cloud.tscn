@@ -1,0 +1,17 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/levels/base/base.tscn" id="1_base"]
+[ext_resource type="Shader" path="res://scenes/levels/eighth/sky.gdshader" id="2_sky"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/storm_cloud/storm_cloud.tscn" id="3_storm_cloud"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sky"]
+shader = ExtResource("2_sky")
+
+[node name="TestStormCloud" instance=ExtResource("1_base")]
+
+[node name="Stars" parent="."]
+material = SubResource("ShaderMaterial_sky")
+
+[node name="StormCloud" parent="Enemies" index="0" instance=ExtResource("3_storm_cloud")]
+position = Vector2(960, 230)
+entry_delay = 0.5

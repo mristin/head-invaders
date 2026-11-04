@@ -1,0 +1,33 @@
+[gd_scene format=3]
+
+[ext_resource type="Shader" path="res://scenes/levels/base/space.gdshader" id="1_space"]
+[ext_resource type="PackedScene" path="res://scenes/projectiles/projectiles.tscn" id="2_projectiles"]
+[ext_resource type="PackedScene" path="res://scenes/supply_drops/supply_drops.tscn" id="3_supply_drops"]
+[ext_resource type="PackedScene" path="res://scenes/chest_drops/chest_drops.tscn" id="4_chest_drops"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_space"]
+shader = ExtResource("1_space")
+
+[node name="Base" type="Node2D"]
+
+[node name="Space" type="ColorRect" parent="."]
+z_index = -2
+offset_right = 1920.0
+offset_bottom = 1080.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Stars" type="ColorRect" parent="."]
+z_index = -1
+material = SubResource("ShaderMaterial_space")
+offset_right = 1920.0
+offset_bottom = 1080.0
+mouse_filter = 2
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="Projectiles" parent="." instance=ExtResource("2_projectiles")]
+
+[node name="SupplyDrops" parent="." instance=ExtResource("3_supply_drops")]
+
+[node name="ChestDrops" parent="." instance=ExtResource("4_chest_drops")]

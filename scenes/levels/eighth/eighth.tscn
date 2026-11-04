@@ -1,0 +1,64 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/levels/base/base.tscn" id="1_base"]
+[ext_resource type="Shader" path="res://scenes/levels/eighth/sky.gdshader" id="2_sky"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/kite/kite.tscn" id="3_kite"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/hot_air_balloon/hot_air_balloon.tscn" id="4_hot_air_balloon"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/rain_cloud/rain_cloud.tscn" id="5_rain_cloud"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/paper_plane/paper_plane.tscn" id="6_paper_plane"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/storm_cloud/storm_cloud.tscn" id="7_storm_cloud"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sky"]
+shader = ExtResource("2_sky")
+
+[node name="Eighth" instance=ExtResource("1_base")]
+
+[node name="Stars" parent="."]
+material = SubResource("ShaderMaterial_sky")
+
+[node name="ChestDrops" parent="."]
+enabled = true
+styles = Array[int]([1, 2, 3, 5])
+first_delay = 10.0
+
+[node name="Wave1Kite" parent="Enemies" index="0" instance=ExtResource("3_kite")]
+position = Vector2(650, 330)
+
+[node name="Wave1HotAirBalloon" parent="Enemies" index="1" instance=ExtResource("4_hot_air_balloon")]
+position = Vector2(1300, 260)
+entry_delay = 1.5
+
+[node name="Wave2RainCloud" parent="Enemies" index="2" instance=ExtResource("5_rain_cloud")]
+position = Vector2(800, 300)
+entry_delay = 13
+
+[node name="Wave2PaperPlane" parent="Enemies" index="3" instance=ExtResource("6_paper_plane")]
+position = Vector2(1200, 230)
+entry_delay = 14
+
+[node name="Wave3Kite" parent="Enemies" index="4" instance=ExtResource("3_kite")]
+position = Vector2(1250, 340)
+entry_delay = 26
+
+[node name="Wave3RainCloud" parent="Enemies" index="5" instance=ExtResource("5_rain_cloud")]
+position = Vector2(600, 280)
+entry_delay = 27
+
+[node name="Wave4HotAirBalloon" parent="Enemies" index="6" instance=ExtResource("4_hot_air_balloon")]
+position = Vector2(700, 260)
+entry_delay = 38
+
+[node name="Wave4PaperPlane" parent="Enemies" index="7" instance=ExtResource("6_paper_plane")]
+position = Vector2(1300, 240)
+entry_delay = 39
+
+[node name="Wave5Kite" parent="Enemies" index="8" instance=ExtResource("3_kite")]
+position = Vector2(960, 330)
+entry_delay = 50
+
+[node name="Wave5PaperPlane" parent="Enemies" index="9" instance=ExtResource("6_paper_plane")]
+position = Vector2(700, 220)
+entry_delay = 51
+
+[node name="StormCloud" parent="Enemies" index="10" instance=ExtResource("7_storm_cloud")]
+position = Vector2(960, 230)

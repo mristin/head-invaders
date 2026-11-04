@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/levels/base/base.tscn" id="1_base"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/jelly/jelly.tscn" id="2_jelly"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/orbiter/orbiter.tscn" id="3_orbiter"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/zipper/zipper.tscn" id="4_zipper"]
+
+[node name="TestNewAliens" instance=ExtResource("1_base")]
+
+[node name="SupplyDrops" parent="."]
+enabled = false
+
+[node name="Jelly" parent="Enemies" index="0" instance=ExtResource("2_jelly")]
+position = Vector2(960, 260)
+drop_chance = 0.0
+
+[node name="Orbiter" parent="Enemies" index="1" instance=ExtResource("3_orbiter")]
+position = Vector2(500, 300)
+entry_delay = 1.0
+drop_chance = 0.0
+
+[node name="Zipper" parent="Enemies" index="2" instance=ExtResource("4_zipper")]
+position = Vector2(1400, 240)
+entry_delay = 2.0
+drop_chance = 0.0

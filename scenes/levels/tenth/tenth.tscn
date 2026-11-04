@@ -1,0 +1,51 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/levels/base/base.tscn" id="1_base"]
+[ext_resource type="PackedScene" path="res://scenes/levels/tenth/zurich_map.tscn" id="2_map"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/swan/swan.tscn" id="3_swan"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/limmat_swimmer/limmat_swimmer.tscn" id="4_swimmer"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/pigeon/pigeon.tscn" id="5_pigeon"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/tram/tram.tscn" id="6_tram"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/scooter_hipster/scooter_hipster.tscn" id="7_hipster"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/punk/punk.tscn" id="8_punk"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/banker/banker.tscn" id="9_banker"]
+
+[node name="Tenth" instance=ExtResource("1_base")]
+
+[node name="Space" parent="."]
+color = Color(0.105, 0.11, 0.125, 1)
+
+[node name="Stars" parent="."]
+visible = false
+
+[node name="ZurichMap" parent="." instance=ExtResource("2_map")]
+
+[node name="ChestDrops" parent="."]
+enabled = true
+first_delay = 10.0
+
+[node name="Wave1Swan1" parent="Enemies" index="0" instance=ExtResource("3_swan")]
+position = Vector2(880, 0)
+
+[node name="Wave2Swimmer" parent="Enemies" index="1" instance=ExtResource("4_swimmer")]
+position = Vector2(960, 0)
+entry_delay = 14
+
+[node name="Wave2Pigeon" parent="Enemies" index="2" instance=ExtResource("5_pigeon")]
+position = Vector2(600, 260)
+entry_delay = 15
+
+[node name="Wave3Tram" parent="Enemies" index="3" instance=ExtResource("6_tram")]
+position = Vector2(960, 0)
+entry_delay = 28
+
+[node name="Wave3Hipster" parent="Enemies" index="4" instance=ExtResource("7_hipster")]
+position = Vector2(1300, 250)
+entry_delay = 29
+
+[node name="Wave4Punk" parent="Enemies" index="5" instance=ExtResource("8_punk")]
+position = Vector2(700, 360)
+entry_delay = 42
+
+[node name="Banker" parent="Enemies" index="6" instance=ExtResource("9_banker")]
+position = Vector2(960, 200)

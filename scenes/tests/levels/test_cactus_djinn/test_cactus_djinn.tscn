@@ -1,0 +1,26 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/levels/base/base.tscn" id="1_base"]
+[ext_resource type="Shader" path="res://scenes/levels/sixth/desert.gdshader" id="2_desert"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/cactus/cactus.tscn" id="3_cactus"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/djinn/djinn.tscn" id="4_djinn"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_desert"]
+shader = ExtResource("2_desert")
+
+[node name="TestCactusDjinn" instance=ExtResource("1_base")]
+
+[node name="Stars" parent="."]
+material = SubResource("ShaderMaterial_desert")
+
+[node name="SupplyDrops" parent="."]
+enabled = false
+
+[node name="Cactus" parent="Enemies" index="0" instance=ExtResource("3_cactus")]
+position = Vector2(760, 0)
+drop_chance = 0.0
+
+[node name="Djinn" parent="Enemies" index="1" instance=ExtResource("4_djinn")]
+position = Vector2(1200, 260)
+entry_delay = 1.0
+drop_chance = 0.0

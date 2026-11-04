@@ -1,0 +1,29 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/levels/base/base.tscn" id="1_base"]
+[ext_resource type="PackedScene" path="res://scenes/levels/tenth/zurich_map.tscn" id="2_map"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/pigeon/pigeon.tscn" id="3_pigeon"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/tram/tram.tscn" id="4_tram"]
+
+[node name="TestPigeonTram" instance=ExtResource("1_base")]
+
+[node name="Space" parent="."]
+color = Color(0.105, 0.11, 0.125, 1)
+
+[node name="Stars" parent="."]
+visible = false
+
+[node name="ZurichMap" parent="." instance=ExtResource("2_map")]
+start_distance = 1700.0
+
+[node name="SupplyDrops" parent="."]
+enabled = false
+
+[node name="Pigeon" parent="Enemies" index="0" instance=ExtResource("3_pigeon")]
+position = Vector2(700, 260)
+drop_chance = 0.0
+
+[node name="Tram" parent="Enemies" index="1" instance=ExtResource("4_tram")]
+position = Vector2(1100, 0)
+entry_delay = 1.0
+drop_chance = 0.0

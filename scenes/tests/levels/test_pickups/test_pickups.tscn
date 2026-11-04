@@ -1,0 +1,34 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/levels/base/base.tscn" id="1_base"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/saucer/saucer.tscn" id="2_saucer"]
+
+[node name="TestPickups" instance=ExtResource("1_base")]
+
+[node name="SupplyDrops" parent="."]
+min_interval = 1.0
+max_interval = 2.0
+
+[node name="Target1" parent="Enemies" index="0" instance=ExtResource("2_saucer")]
+position = Vector2(400, 180)
+max_energy = 1000
+speed = 80.0
+min_rocket_interval = 1000000.0
+max_rocket_interval = 1000000.0
+drop_chance = 0.0
+
+[node name="Target2" parent="Enemies" index="1" instance=ExtResource("2_saucer")]
+position = Vector2(960, 260)
+max_energy = 1000
+speed = 80.0
+min_rocket_interval = 1000000.0
+max_rocket_interval = 1000000.0
+drop_chance = 0.0
+
+[node name="Target3" parent="Enemies" index="2" instance=ExtResource("2_saucer")]
+position = Vector2(1520, 180)
+max_energy = 1000
+speed = 80.0
+min_rocket_interval = 1000000.0
+max_rocket_interval = 1000000.0
+drop_chance = 0.0

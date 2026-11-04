@@ -1,0 +1,17 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/levels/base/base.tscn" id="1_base"]
+[ext_resource type="Shader" path="res://scenes/levels/fourth/ocean.gdshader" id="2_ocean"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/sea_serpent/sea_serpent.tscn" id="3_sea_serpent"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ocean"]
+shader = ExtResource("2_ocean")
+
+[node name="TestSeaSerpent" instance=ExtResource("1_base")]
+
+[node name="Stars" parent="."]
+material = SubResource("ShaderMaterial_ocean")
+
+[node name="SeaSerpent" parent="Enemies" index="0" instance=ExtResource("3_sea_serpent")]
+position = Vector2(960, 330)
+entry_delay = 0.5

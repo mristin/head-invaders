@@ -1,0 +1,26 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/levels/base/base.tscn" id="1_base"]
+[ext_resource type="Shader" path="res://scenes/levels/eighth/sky.gdshader" id="2_sky"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/kite/kite.tscn" id="3_kite"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/hot_air_balloon/hot_air_balloon.tscn" id="4_hot_air_balloon"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sky"]
+shader = ExtResource("2_sky")
+
+[node name="TestKiteBalloon" instance=ExtResource("1_base")]
+
+[node name="Stars" parent="."]
+material = SubResource("ShaderMaterial_sky")
+
+[node name="SupplyDrops" parent="."]
+enabled = false
+
+[node name="Kite" parent="Enemies" index="0" instance=ExtResource("3_kite")]
+position = Vector2(700, 330)
+drop_chance = 0.0
+
+[node name="HotAirBalloon" parent="Enemies" index="1" instance=ExtResource("4_hot_air_balloon")]
+position = Vector2(1250, 260)
+entry_delay = 1.0
+drop_chance = 0.0

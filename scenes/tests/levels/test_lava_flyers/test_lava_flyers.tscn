@@ -1,0 +1,26 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/levels/base/base.tscn" id="1_base"]
+[ext_resource type="Shader" path="res://scenes/levels/fifth/lava.gdshader" id="2_lava"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/dragonling/dragonling.tscn" id="3_dragonling"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/jet_dwarf/jet_dwarf.tscn" id="4_jet_dwarf"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lava"]
+shader = ExtResource("2_lava")
+
+[node name="TestLavaFlyers" instance=ExtResource("1_base")]
+
+[node name="Stars" parent="."]
+material = SubResource("ShaderMaterial_lava")
+
+[node name="SupplyDrops" parent="."]
+enabled = false
+
+[node name="Dragonling" parent="Enemies" index="0" instance=ExtResource("3_dragonling")]
+position = Vector2(960, 260)
+drop_chance = 0.0
+
+[node name="JetDwarf" parent="Enemies" index="1" instance=ExtResource("4_jet_dwarf")]
+position = Vector2(400, 220)
+entry_delay = 1.0
+drop_chance = 0.0

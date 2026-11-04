@@ -1,0 +1,37 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/levels/base/base.tscn" id="1_base"]
+[ext_resource type="Shader" path="res://scenes/levels/fifth/lava.gdshader" id="2_lava"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/lizard/lizard.tscn" id="3_lizard"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/snake/snake.tscn" id="4_snake"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/golem/golem.tscn" id="5_golem"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/volcano/volcano.tscn" id="6_volcano"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lava"]
+shader = ExtResource("2_lava")
+
+[node name="TestLavaGround" instance=ExtResource("1_base")]
+
+[node name="Stars" parent="."]
+material = SubResource("ShaderMaterial_lava")
+
+[node name="SupplyDrops" parent="."]
+enabled = false
+
+[node name="Lizard" parent="Enemies" index="0" instance=ExtResource("3_lizard")]
+position = Vector2(500, 0)
+drop_chance = 0.0
+
+[node name="Snake" parent="Enemies" index="1" instance=ExtResource("4_snake")]
+position = Vector2(1400, 0)
+drop_chance = 0.0
+
+[node name="Golem" parent="Enemies" index="2" instance=ExtResource("5_golem")]
+position = Vector2(1000, 0)
+entry_delay = 1.0
+drop_chance = 0.0
+
+[node name="Volcano" parent="Enemies" index="3" instance=ExtResource("6_volcano")]
+position = Vector2(700, 0)
+entry_delay = 2.0
+drop_chance = 0.0

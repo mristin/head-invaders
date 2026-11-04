@@ -1,0 +1,10 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/levels/base/base.tscn" id="1_base"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/queen/queen.tscn" id="2_queen"]
+
+[node name="TestQueen" instance=ExtResource("1_base")]
+
+[node name="Queen" parent="Enemies" index="0" instance=ExtResource("2_queen")]
+position = Vector2(960, 250)
+entry_delay = 0.5

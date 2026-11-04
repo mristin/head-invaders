@@ -1,0 +1,22 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/enemies/limmat_swimmer/limmat_swimmer.gd" id="1_script"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_float"]
+radius = 65.0
+
+[node name="LimmatSwimmer" type="Area2D"]
+collision_layer = 2
+collision_mask = 0
+monitoring = false
+script = ExtResource("1_script")
+ground_speed = 40.0
+max_energy = 7
+radius = 104.0
+min_rocket_interval = 2.6
+max_rocket_interval = 4.2
+rocket_speed = 290.0
+rocket_look = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_float")

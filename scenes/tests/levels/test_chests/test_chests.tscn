@@ -1,0 +1,14 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/levels/base/base.tscn" id="1_base"]
+
+[node name="TestChests" instance=ExtResource("1_base")]
+
+[node name="SupplyDrops" parent="."]
+enabled = false
+
+[node name="ChestDrops" parent="."]
+enabled = true
+min_interval = 7.0
+max_interval = 9.0
+first_delay = 0.5

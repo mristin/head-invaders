@@ -1,0 +1,26 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/levels/base/base.tscn" id="1_base"]
+[ext_resource type="Shader" path="res://scenes/levels/sixth/desert.gdshader" id="2_desert"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/sand_worm/sand_worm.tscn" id="3_sand_worm"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/mirage_fox/mirage_fox.tscn" id="4_mirage_fox"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_desert"]
+shader = ExtResource("2_desert")
+
+[node name="TestWormFox" instance=ExtResource("1_base")]
+
+[node name="Stars" parent="."]
+material = SubResource("ShaderMaterial_desert")
+
+[node name="SupplyDrops" parent="."]
+enabled = false
+
+[node name="SandWorm" parent="Enemies" index="0" instance=ExtResource("3_sand_worm")]
+position = Vector2(700, 0)
+drop_chance = 0.0
+
+[node name="MirageFox" parent="Enemies" index="1" instance=ExtResource("4_mirage_fox")]
+position = Vector2(1200, 300)
+entry_delay = 1.0
+drop_chance = 0.0

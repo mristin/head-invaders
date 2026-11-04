@@ -23,3 +23,16 @@ mono_crash.*.json
 *.exe
 # Uncomment if your project does not version PCK files as runtime dependencies.
 # *.pck
+
+/android/
+
+# .NET build outputs of the test projects
+tests/**/bin/
+tests/**/obj/
+
+# The Python virtual environment of the development tools
+/venv/
+
+# The exported packages, see export_presets.cfg
+/build/
+/dist/

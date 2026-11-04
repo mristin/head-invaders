@@ -1,0 +1,19 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/levels/base/base.tscn" id="1_base"]
+[ext_resource type="Shader" path="res://scenes/levels/seventh/arctic.gdshader" id="2_arctic"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/iceberg/iceberg.tscn" id="3_iceberg"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_arctic"]
+shader = ExtResource("2_arctic")
+
+[node name="TestIceberg" instance=ExtResource("1_base")]
+
+[node name="Stars" parent="."]
+material = SubResource("ShaderMaterial_arctic")
+
+[node name="SupplyDrops" parent="."]
+enabled = false
+
+[node name="Iceberg" parent="Enemies" index="0" instance=ExtResource("3_iceberg")]
+position = Vector2(960, 0)

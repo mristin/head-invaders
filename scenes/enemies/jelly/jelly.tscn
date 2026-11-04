@@ -1,0 +1,22 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/enemies/jelly/jelly.gd" id="1_script"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bell"]
+radius = 58.0
+
+[node name="Jelly" type="Area2D"]
+collision_layer = 2
+collision_mask = 0
+monitoring = false
+script = ExtResource("1_script")
+max_energy = 10
+radius = 72.0
+min_rocket_interval = 3.5
+max_rocket_interval = 5.5
+rocket_speed = 260.0
+drop_chance = 0.5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -12)
+shape = SubResource("CircleShape2D_bell")

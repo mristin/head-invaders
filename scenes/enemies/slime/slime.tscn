@@ -1,0 +1,21 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/enemies/slime/slime.gd" id="1_script"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_blob"]
+radius = 48.0
+
+[node name="Slime" type="Area2D"]
+collision_layer = 2
+collision_mask = 0
+monitoring = false
+script = ExtResource("1_script")
+max_energy = 6
+radius = 66.0
+min_rocket_interval = 2.5
+max_rocket_interval = 4.5
+rocket_speed = 340.0
+drop_chance = 0.3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_blob")

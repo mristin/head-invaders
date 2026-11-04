@@ -1,0 +1,9 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/head_tracker/head_tracker.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://scenes/head_tracker/camera_head_tracker/camera_head_tracker.tscn" id="2_tracker"]
+
+[node name="HeadTracker" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="CameraHeadTracker" parent="." instance=ExtResource("2_tracker")]

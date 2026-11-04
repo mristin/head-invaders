@@ -1,0 +1,63 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/levels/base/base.tscn" id="1_base"]
+[ext_resource type="Shader" path="res://scenes/levels/sixth/desert.gdshader" id="2_desert"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/cactus/cactus.tscn" id="3_cactus"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/djinn/djinn.tscn" id="4_djinn"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/sand_worm/sand_worm.tscn" id="5_sand_worm"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/mirage_fox/mirage_fox.tscn" id="6_mirage_fox"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/great_scarab/great_scarab.tscn" id="7_great_scarab"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_desert"]
+shader = ExtResource("2_desert")
+
+[node name="Sixth" instance=ExtResource("1_base")]
+
+[node name="Stars" parent="."]
+material = SubResource("ShaderMaterial_desert")
+
+[node name="ChestDrops" parent="."]
+enabled = true
+first_delay = 10.0
+
+[node name="Wave1Cactus" parent="Enemies" index="0" instance=ExtResource("3_cactus")]
+position = Vector2(700, 0)
+
+[node name="Wave1Djinn" parent="Enemies" index="1" instance=ExtResource("4_djinn")]
+position = Vector2(1250, 260)
+entry_delay = 1.5
+
+[node name="Wave2SandWorm" parent="Enemies" index="2" instance=ExtResource("5_sand_worm")]
+position = Vector2(800, 0)
+entry_delay = 13
+
+[node name="Wave2MirageFox" parent="Enemies" index="3" instance=ExtResource("6_mirage_fox")]
+position = Vector2(1200, 300)
+entry_delay = 14
+
+[node name="Wave3Cactus" parent="Enemies" index="4" instance=ExtResource("3_cactus")]
+position = Vector2(1300, 0)
+entry_delay = 26
+
+[node name="Wave3Djinn" parent="Enemies" index="5" instance=ExtResource("4_djinn")]
+position = Vector2(620, 240)
+entry_delay = 27
+
+[node name="Wave4MirageFox" parent="Enemies" index="6" instance=ExtResource("6_mirage_fox")]
+position = Vector2(760, 280)
+entry_delay = 38
+
+[node name="Wave4SandWorm" parent="Enemies" index="7" instance=ExtResource("5_sand_worm")]
+position = Vector2(1300, 0)
+entry_delay = 39
+
+[node name="Wave5Cactus" parent="Enemies" index="8" instance=ExtResource("3_cactus")]
+position = Vector2(960, 0)
+entry_delay = 50
+
+[node name="Wave5Djinn" parent="Enemies" index="9" instance=ExtResource("4_djinn")]
+position = Vector2(1300, 220)
+entry_delay = 51
+
+[node name="GreatScarab" parent="Enemies" index="10" instance=ExtResource("7_great_scarab")]
+position = Vector2(960, 210)

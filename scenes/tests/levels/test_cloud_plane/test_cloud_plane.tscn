@@ -1,0 +1,26 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/levels/base/base.tscn" id="1_base"]
+[ext_resource type="Shader" path="res://scenes/levels/eighth/sky.gdshader" id="2_sky"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/rain_cloud/rain_cloud.tscn" id="3_rain_cloud"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/paper_plane/paper_plane.tscn" id="4_paper_plane"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sky"]
+shader = ExtResource("2_sky")
+
+[node name="TestCloudPlane" instance=ExtResource("1_base")]
+
+[node name="Stars" parent="."]
+material = SubResource("ShaderMaterial_sky")
+
+[node name="SupplyDrops" parent="."]
+enabled = false
+
+[node name="RainCloud" parent="Enemies" index="0" instance=ExtResource("3_rain_cloud")]
+position = Vector2(800, 300)
+drop_chance = 0.0
+
+[node name="PaperPlane" parent="Enemies" index="1" instance=ExtResource("4_paper_plane")]
+position = Vector2(1200, 230)
+entry_delay = 1.0
+drop_chance = 0.0

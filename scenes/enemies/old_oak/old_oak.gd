@@ -109,15 +109,14 @@ func _sprout_mushrooms() -> void:
         var side := -1.0 if i % 2 == 0 else 1.0
         var at := global_position + Vector2(side * radius * 0.9, radius * 0.5)
         var mushroom := _summon(_MUSHROOM_SCENE, at)
-        mushroom.max_energy = 3
-        mushroom.drop_chance = 0.1
+        mushroom.max_energy = 45
         Poof.spawn(self, at, radius * 0.3, Color(0.6, 1.0, 0.4))
 
 
-func _start_fleeing(may_drop: bool = true) -> void:
+func _start_fleeing(beaten: bool = true) -> void:
     # NOTE (mristin):
     # Its mushrooms follow it home; see Enemy.minions.
-    super(may_drop)
+    super(beaten)
     Poof.spawn(self, global_position, radius * 1.5, Color(0.6, 1.0, 0.4))
 
 

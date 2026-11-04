@@ -12,8 +12,5 @@ shader = ExtResource("2_arctic")
 [node name="Stars" parent="."]
 material = SubResource("ShaderMaterial_arctic")
 
-[node name="SupplyDrops" parent="."]
-enabled = false
-
 [node name="Iceberg" parent="Enemies" index="0" instance=ExtResource("3_iceberg")]
 position = Vector2(960, 0)

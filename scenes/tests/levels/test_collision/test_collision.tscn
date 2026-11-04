@@ -5,13 +5,9 @@
 
 [node name="TestCollision" instance=ExtResource("1_base")]
 
-[node name="SupplyDrops" parent="."]
-enabled = false
-
 [node name="Dummy" parent="Enemies" index="0" instance=ExtResource("2_saucer")]
 position = Vector2(960, 420)
-max_energy = 1000
+max_energy = 10000
 speed = 0.0
 min_rocket_interval = 1000000.0
 max_rocket_interval = 1000000.0
-drop_chance = 0.0

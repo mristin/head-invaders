@@ -15,3 +15,4 @@ material = SubResource("ShaderMaterial_sky")
 [node name="StormCloud" parent="Enemies" index="0" instance=ExtResource("3_storm_cloud")]
 position = Vector2(960, 230)
 entry_delay = 0.5
+max_energy = 1680

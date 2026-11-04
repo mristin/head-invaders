@@ -54,7 +54,6 @@ func _ship() -> Spaceship:
 func _hold_fire(enemies: Array[Enemy]) -> void:
     for enemy in enemies:
         enemy._rocket_cooldown = 1000.0
-        enemy.drop_chance = 0.0
 
 
 func _run() -> void:
@@ -67,7 +66,7 @@ func _run() -> void:
     var hud: Hud = _game.get_node("Hud")
     var all := _enemies()
     _hold_fire(all)
-    _level().get_node("SupplyDrops")._cooldown = 1000.0
+    _level().get_node("ChestDrops").enabled = false
 
     var saucers := all.filter(func(e): return e is Saucer)
     var darts := all.filter(func(e): return e is Dart)
@@ -76,7 +75,7 @@ func _run() -> void:
         all.filter(func(e): return e is Queen).size() == 1, "the first level ends with the queen"
     )
     _check(
-        hud.enemy_count.text == "Aliens: 10",
+        hud.enemy_count.text == "Bad dreams: 10",
         "HUD counts the enemies of all the waves (got '%s')" % hud.enemy_count.text
     )
 
@@ -178,18 +177,42 @@ func _run() -> void:
     var scene_missile: PackedScene = load("res://scenes/missile/missile.tscn")
     var missile: Missile = scene_missile.instantiate()
     missile.direction = Vector2.UP
-    # NOTE: The rocket homes in on whichever enemy is nearest along the way,
-    # so we check that it hit some enemy, which a straight shot up would miss.
+    # NOTE: The rocket homes in on whichever enemy is nearest ahead of it, so
+    # we launch it from below and to the side of an enemy, within the cone of
+    # the rocket, where a straight shot up would miss, and check that it hit
+    # some enemy.
     var energies := {}
     for e in arrived:
         energies[e] = e.energy
+    var aim: Enemy = arrived[0]
+    var side := 1.0 if aim.global_position.x < 960.0 else -1.0
+    var cone := missile.max_angle
+    var launch_at := aim.global_position + Vector2(side * 0.32 * 700.0, 700.0)
     var projectiles: Projectiles = _level().get_node("Projectiles")
-    projectiles.launch(missile, Vector2(100, 1000))
-    await _wait(2.5)
+    projectiles.launch(missile, launch_at)
+    var widest := 0.0
+    for i in range(50):
+        await _wait(0.05)
+        if is_instance_valid(missile):
+            widest = maxf(widest, absf(Vector2.UP.angle_to(missile.direction)))
     var lost := 0
     for e in energies:
         lost += energies[e] - (e.energy if is_instance_valid(e) else 0)
     _check(lost > 0, "a homing rocket curves into an enemy (energy lost %d)" % lost)
+    _check(
+        widest <= cone + 0.001, "a homing rocket never turns sideways (widest %.2f rad)" % widest
+    )
+
+    # NOTE: An enemy at the side of the rocket is out of its reach.
+    var sideways: Missile = scene_missile.instantiate()
+    sideways.direction = Vector2.UP
+    var aim_energy := aim.energy
+    projectiles.launch(sideways, aim.global_position + Vector2(side * 700.0, 150.0))
+    await _wait(1.5)
+    _check(
+        aim.energy == aim_energy,
+        "a homing rocket ignores the enemies at its side (%d -> %d)" % [aim_energy, aim.energy]
+    )
 
     Pickup.drop(ship, ship.global_position, Pickup.Kind.ROCKETS)
     await _wait(0.1)
@@ -201,25 +224,29 @@ func _run() -> void:
             e.set_physics_process(true)
     # endregion
 
-    # region Defeated enemies drop pickups
-    var dropper: Saucer = saucers[1]
-    if not is_instance_valid(dropper):
-        dropper = saucers.filter(func(e): return is_instance_valid(e))[0]
+    # region Only the chests give the boosters
+    var beaten: Saucer = saucers[1]
+    if not is_instance_valid(beaten):
+        beaten = saucers.filter(func(e): return is_instance_valid(e))[0]
     await _wait(1.0)
-    dropper.drop_chance = 1.0
     var pickups_before := _of_type("Pickup").size()
-    dropper.take_damage(100)
+    beaten.take_damage(beaten.max_energy)
     await _wait(0.05)
-    _check(
-        _of_type("Pickup").size() == pickups_before + 1, "a defeated enemy leaves a pickup behind"
-    )
-    # endregion
+    _check(_of_type("Pickup").size() == pickups_before, "a defeated enemy leaves no pickup behind")
 
-    # region Supply drops
-    _level().get_node("SupplyDrops")._cooldown = 0.0
-    await _wait(0.1)
-    var supplies := _of_type("Pickup").filter(func(p): return p.global_position.y < 100.0)
-    _check(not supplies.is_empty(), "the supply drops come from the top")
+    Chest.drop(ship, Vector2(960, 300))
+    await _wait(0.05)
+    var chests := _of_type("Chest")
+    _check(chests.size() == 1, "a chest floats in")
+    if chests.size() == 1:
+        var chest: Chest = chests[0]
+        chest.take_damage(chest.strength_left - 1)
+        _check(not chest.is_open(), "the chest holds until it is out of strength")
+        chest.take_damage(1)
+        await _wait(0.05)
+        _check(
+            _of_type("Pickup").size() == pickups_before + 1, "the opened chest gives one booster"
+        )
     # endregion
 
     # region Repair clears the weapons

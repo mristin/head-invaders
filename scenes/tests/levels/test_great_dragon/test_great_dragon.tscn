@@ -15,3 +15,4 @@ material = SubResource("ShaderMaterial_lava")
 [node name="GreatDragon" parent="Enemies" index="0" instance=ExtResource("3_great_dragon")]
 position = Vector2(960, 290)
 entry_delay = 0.5
+max_energy = 1680

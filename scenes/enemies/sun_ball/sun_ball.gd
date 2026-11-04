@@ -59,9 +59,8 @@ var _full_radius: float = 0.0
 func _ready() -> void:
     super()
     rocket_look = Rocket.Look.ZAP
-    max_energy = 1000
+    max_energy = 10000
     energy = max_energy
-    drop_chance = 0.0
 
     # NOTE (mristin):
     # The sun ball takes its size from the scarab, so we make its shape here.

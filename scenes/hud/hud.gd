@@ -18,4 +18,4 @@ func on_player_count_changed(count: int) -> void:
 
 
 func on_enemy_count_changed(count: int) -> void:
-    enemy_count.text = "Aliens: %d" % count
+    enemy_count.text = "Bad dreams: %d" % count

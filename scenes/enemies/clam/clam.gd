@@ -5,7 +5,7 @@ extends GroundEnemy
 ## A giant clam drifting down with the current. It opens and closes its shell
 ## in turns. While it is closed, the bullets bounce off with a "ting"; when it
 ## opens, it spits a big pearl at the nearest spaceship, and only then it can
-## be hit. It always leaves a pickup behind, like a treasure.
+## be hit.
 
 enum State { CLOSED, OPENING, OPEN, CLOSING }
 

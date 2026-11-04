@@ -123,9 +123,9 @@ func _update_sparks(delta: float) -> void:
             _danced += 1
 
 
-func _start_fleeing(may_drop: bool = true) -> void:
+func _start_fleeing(beaten: bool = true) -> void:
     _stop_left = 0.0
-    super(may_drop)
+    super(beaten)
 
 
 func _draw_body(flash: float) -> void:

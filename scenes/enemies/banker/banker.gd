@@ -274,9 +274,9 @@ func _update_money(delta: float) -> void:
             _coins.remove_at(i)
 
 
-func _start_fleeing(may_drop: bool = true) -> void:
+func _start_fleeing(beaten: bool = true) -> void:
     _angle = 0.0
-    super(may_drop)
+    super(beaten)
 
 
 func _draw_body(flash: float) -> void:

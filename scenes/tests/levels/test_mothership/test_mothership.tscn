@@ -8,3 +8,4 @@
 [node name="Mothership" parent="Enemies" index="0" instance=ExtResource("2_mothership")]
 position = Vector2(960, 240)
 entry_delay = 0.5
+max_energy = 1540

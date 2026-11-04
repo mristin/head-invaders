@@ -5,21 +5,16 @@
 
 [node name="TestEnemyRockets" instance=ExtResource("1_base")]
 
-[node name="SupplyDrops" parent="."]
-enabled = false
-
 [node name="Upper" parent="Enemies" index="0" instance=ExtResource("2_saucer")]
 position = Vector2(960, 180)
-max_energy = 1000
+max_energy = 10000
 speed = 0.0
 min_rocket_interval = 0.8
 max_rocket_interval = 1.4
-drop_chance = 0.0
 
 [node name="Lower" parent="Enemies" index="1" instance=ExtResource("2_saucer")]
 position = Vector2(960, 430)
-max_energy = 1000
+max_energy = 10000
 speed = 0.0
 min_rocket_interval = 1000000.0
 max_rocket_interval = 1000000.0
-drop_chance = 0.0

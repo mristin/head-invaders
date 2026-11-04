@@ -13,14 +13,9 @@ shader = ExtResource("2_alps")
 [node name="Stars" parent="."]
 material = SubResource("ShaderMaterial_alps")
 
-[node name="SupplyDrops" parent="."]
-enabled = false
-
 [node name="Gondola" parent="Enemies" index="0" instance=ExtResource("3_gondola")]
 position = Vector2(700, 330)
-drop_chance = 0.0
 
 [node name="Yodeler" parent="Enemies" index="1" instance=ExtResource("4_yodeler")]
 position = Vector2(1250, 220)
 entry_delay = 1.0
-drop_chance = 0.0

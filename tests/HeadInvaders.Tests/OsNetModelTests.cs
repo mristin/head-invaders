@@ -29,8 +29,8 @@ namespace HeadInvaders.Tests
         /// and unlike the other players.
         /// </summary>
         /// <remarks>
-        /// This bounds what the tracker can expect: the re-identification threshold
-        /// must lie between the two.
+        /// The tracker gives a returning player the identity of the most similar
+        /// lost player, so each player must look the most like themselves.
         /// </remarks>
         [Fact]
         public void Test_that_players_are_told_apart_in_the_crew_photo()
@@ -65,10 +65,18 @@ namespace HeadInvaders.Tests
             var different = new List<float>();
             for (int i = 0; i < crops.Count; i++)
             {
-                for (int j = i + 1; j < crops.Count; j++)
+                float mostSimilarOther = float.NegativeInfinity;
+                for (int j = 0; j < crops.Count; j++)
                 {
-                    different.Add(OsNetModel.CosineSimilarity(embeddings[i], embeddings[j]));
+                    if (j != i)
+                    {
+                        mostSimilarOther = System.Math.Max(
+                            mostSimilarOther,
+                            OsNetModel.CosineSimilarity(embeddings[i], embeddings[j])
+                        );
+                    }
                 }
+                different.Add(mostSimilarOther);
             }
 
             string summary = (
@@ -76,9 +84,13 @@ namespace HeadInvaders.Tests
                 $"different: [{string.Join(", ", different.Select(s => s.ToString("F2")))}]"
             );
 
-            var defaults = new MultiHeadTracker();
-            Assert.True(same.Min() >= defaults.ReIdThreshold, $"Same player below threshold; {summary}");
-            Assert.True(different.Max() < defaults.ReIdThreshold, $"Different players above threshold; {summary}");
+            for (int i = 0; i < crops.Count; i++)
+            {
+                Assert.True(
+                    same[i] > different[i],
+                    $"Player {i} looks more like somebody else; {summary}"
+                );
+            }
         }
 
         [Fact]

@@ -6,14 +6,9 @@
 
 [node name="TestSlimePuffer" instance=ExtResource("1_base")]
 
-[node name="SupplyDrops" parent="."]
-enabled = false
-
 [node name="Slime" parent="Enemies" index="0" instance=ExtResource("2_slime")]
 position = Vector2(760, 260)
-drop_chance = 0.0
 
 [node name="Puffer" parent="Enemies" index="1" instance=ExtResource("3_puffer")]
 position = Vector2(1300, 0)
 entry_delay = 1.0
-drop_chance = 0.0

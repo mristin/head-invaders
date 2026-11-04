@@ -63,13 +63,9 @@ public partial class CameraHeadTracker : Node
     [Export]
     public float LostTimeout = 0.5f;
 
-    /// <summary>Recognize a returning player only if they look at least this similar.</summary>
-    [Export(PropertyHint.Range, "0,1")]
-    public float ReIdThreshold = 0.85f;
-
     /// <summary>Remember the lost players for this many seconds.</summary>
     [Export]
-    public float ReIdMemory = 30f;
+    public float ReIdMemory = 600f;
 
     [Export(PropertyHint.Range, "0,1")]
     public float OverlayOpacity = 0.2f;
@@ -192,7 +188,6 @@ public partial class CameraHeadTracker : Node
             MinCutoff = MinCutoff,
             Beta = Beta,
             LostTimeout = LostTimeout,
-            ReIdThreshold = ReIdThreshold,
             ReIdMemory = ReIdMemory,
         };
 

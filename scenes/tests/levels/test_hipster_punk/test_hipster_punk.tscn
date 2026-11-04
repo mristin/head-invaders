@@ -16,14 +16,9 @@ visible = false
 [node name="ZurichMap" parent="." instance=ExtResource("2_map")]
 start_distance = 2600.0
 
-[node name="SupplyDrops" parent="."]
-enabled = false
-
 [node name="ScooterHipster" parent="Enemies" index="0" instance=ExtResource("3_hipster")]
 position = Vector2(1300, 250)
-drop_chance = 0.0
 
 [node name="Punk" parent="Enemies" index="1" instance=ExtResource("4_punk")]
 position = Vector2(700, 360)
 entry_delay = 1.0
-drop_chance = 0.0

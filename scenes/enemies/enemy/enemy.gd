@@ -3,8 +3,10 @@ class_name Enemy
 extends Area2D
 
 ## Define what all the enemies share: arriving in waves, the energy, taking
-## the damage, fleeing when out of energy, leaving a pickup behind and firing
-## the rockets.
+## the damage, fleeing when out of energy and firing the rockets.
+##
+## The enemies leave no pickups behind; the boosters come only from the
+## treasure chests.
 ##
 ## NOTE (mristin):
 ## This is a game for children, so the enemies never explode; they get dizzy and
@@ -31,8 +33,10 @@ const GROW: float = 1.35
 # refer back to the spaceships and the enemies.
 const _ROCKET_SCENE_PATH: String = "res://scenes/rocket/rocket.tscn"
 
-## The enemies have less energy than the spaceships have health.
-@export var max_energy: int = 6
+## The enemies have less energy than the spaceships have health. Like all the
+## damage, the energy counts in tenths of a hit, so that we can tune it finely:
+## a bullet takes 13.
+@export var max_energy: int = 90
 
 ## Roughly the size of the enemy, for the energy bar and the poof.
 @export var radius: float = 48.0
@@ -56,9 +60,6 @@ const _ROCKET_SCENE_PATH: String = "res://scenes/rocket/rocket.tscn"
 ## How long the rockets fly, in seconds; short for the short-range sparks of
 ## a jellyfish.
 @export var rocket_lifetime: float = 8.0
-
-## The chance of leaving a pickup behind when defeated.
-@export_range(0.0, 1.0) var drop_chance: float = 0.3
 
 ## How fast the enemy speeds up when fleeing, in pixels per second squared.
 @export var flee_acceleration: float = 900.0
@@ -174,7 +175,7 @@ func take_damage(amount: int) -> void:
         _start_fleeing()
 
 
-## Give up and flee home without leaving anything behind, e.g., when the queen
+## Give up and flee home without being beaten, e.g., when the queen
 ## flees and her darts follow her.
 func retreat() -> void:
     if not is_inside_tree():
@@ -195,10 +196,9 @@ func retreat() -> void:
     _start_fleeing(false)
 
 
-func _start_fleeing(may_drop: bool = true) -> void:
+## Flee home, beaten by the players or retreating with the boss.
+func _start_fleeing(_beaten: bool = true) -> void:
     Poof.spawn(self, global_position, radius, Color(1.0, 0.82, 0.4))
-    if may_drop and randf() < drop_chance:
-        Pickup.drop(self, global_position, Pickup.random_kind())
 
     # NOTE (mristin):
     # We may be inside a physics callback here (e.g., a bullet hit us), where

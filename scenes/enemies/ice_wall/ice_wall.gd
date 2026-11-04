@@ -28,7 +28,6 @@ func _enlarge_by(_factor: float) -> void:
 func _ready() -> void:
     super()
     grounded = true
-    drop_chance = 0.0
 
 
 func is_targetable() -> bool:
@@ -51,7 +50,7 @@ func _move(delta: float) -> void:
         retreat()
 
 
-func _start_fleeing(_may_drop: bool = true) -> void:
+func _start_fleeing(_beaten: bool = true) -> void:
     # NOTE (mristin):
     # The wall does not flee; it crumbles into snow with a poof.
     Poof.spawn(self, global_position, radius, Color(0.75, 0.92, 1.0))

@@ -4,5 +4,3 @@
 
 [node name="TestPlayers" instance=ExtResource("1_base")]
 
-[node name="SupplyDrops" parent="."]
-enabled = false

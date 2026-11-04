@@ -249,7 +249,7 @@ var _cases: Array[TestCase] = [
         _TESTS + "/test_enemy_rockets/test_enemy_rockets_players.gd"
     ),
     TestCase.new(
-        "Pickups: the supply drops and all the weapons",
+        "Pickups: the chests and all the weapons",
         _TESTS + "/test_pickups/test_pickups.tscn",
         _TESTS + "/test_pickups/test_pickups_players.gd"
     ),

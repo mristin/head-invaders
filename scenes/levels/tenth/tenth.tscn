@@ -22,7 +22,6 @@ visible = false
 
 [node name="ChestDrops" parent="."]
 enabled = true
-first_delay = 10.0
 
 [node name="Wave1Swan1" parent="Enemies" index="0" instance=ExtResource("3_swan")]
 position = Vector2(880, 0)

@@ -18,10 +18,11 @@ The game is made with [Godot] 4.6 (.NET), written in GDScript and C#:
 The enemies on the ground (e.g., the mushrooms of the forest) extend `GroundEnemy`, which slides them down with the ground; keep its `ground_speed` the same as the scrolling of the level's background.
 
 Each level has a background of its own: it overrides the material of `Stars` from `scenes/levels/base/base.tscn` and either sets the parameters of `space.gdshader` (the colors of the space and the nebula, the size of the clouds, and an optional planet far away), or uses a shader of its own, like the forest of the third level.
+A detailed ground which is too heavy to draw on every frame, like the forest and the sea, is drawn once into a tall tile by `PrerenderedGround` (`scenes/levels/base/prerendered_ground.gd`), which repeats vertically; the level's shader then only slides the tile down and adds what moves, like the ripples of the river.
 Keep the backgrounds calm and dim, so that the players never mistake the stars for the bullets or the rockets.
 The tenth level (Zurich) has no shader: `ZurichMap` (`scenes/levels/tenth/zurich_map.gd`) draws a dim map of the city in chunks and slides it at `scroll_speed`, which its ground enemies match; enemies can find it in the group `zurich_map`, e.g., the Limmat swimmer follows the river with `limmat_x()`.
 
-This is a game for children, so we avoid violence as well as sad and realistic themes: nothing explodes, things go "poof", the defeated aliens flee home, and a spaceship out of shield only gets dizzy.
+This is a game for children, so we avoid violence as well as sad and realistic themes: nothing explodes, things go "poof", the defeated bad dreams fly home, and a spaceship out of shield only gets dizzy.
 
 [Godot]: https://godotengine.org
 [ergo-chaos]: https://github.com/mristin/ergo-chaos
@@ -120,7 +121,7 @@ To add a test level:
 1. Create `scenes/tests/levels/test_<name>/test_<name>.tscn`, usually inheriting from `scenes/levels/base/base.tscn`, and put the enemies under `Enemies`.
    Override the exported properties to isolate the behavior.
    For example, a saucer with `speed = 0` and a huge `max_energy` makes a training dummy.
-   Disable the supply drops if you do not need them, and enable the treasure chests (`ChestDrops`) if you need them.
+   Enable the treasure chests (`ChestDrops`) if you need them; they are the only source of the boosters.
 2. Script the players in `test_<name>_players.gd`, extending `ScriptedHeads` (`scenes/tests/scripted_heads/scripted_heads.gd`) and overriding `_play` with the helpers like `appear`, `glide`, `chase` and `lose`.
 3. Register the test in `scenes/tests/game_harness/game_harness.gd`.
 4. Add the expected behavior to `tests/godot/test_harness_levels.gd`, so that the automatic tests check it as well.

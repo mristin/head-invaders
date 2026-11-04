@@ -36,7 +36,7 @@ const _RAIN_CLOUD_SCENE_PATH: String = "res://scenes/enemies/rain_cloud/rain_clo
 @export var charge_duration: float = 1.4
 @export var strike_duration: float = 0.45
 @export var lane_half_width: float = 95.0
-@export var lightning_damage: int = 1
+@export var lightning_damage: int = 14
 
 ## The rain: how long the cloud gathers it, the number of the raindrops and
 ## the seconds between them.
@@ -283,9 +283,9 @@ func _sneeze() -> void:
         Poof.spawn(self, at, radius * 0.3, Color(0.75, 0.8, 1.0))
 
 
-func _start_fleeing(may_drop: bool = true) -> void:
+func _start_fleeing(beaten: bool = true) -> void:
     _lanes.clear()
-    super(may_drop)
+    super(beaten)
 
 
 func _energy_bar_y() -> float:

@@ -7,19 +7,13 @@
 
 [node name="TestNewAliens" instance=ExtResource("1_base")]
 
-[node name="SupplyDrops" parent="."]
-enabled = false
-
 [node name="Jelly" parent="Enemies" index="0" instance=ExtResource("2_jelly")]
 position = Vector2(960, 260)
-drop_chance = 0.0
 
 [node name="Orbiter" parent="Enemies" index="1" instance=ExtResource("3_orbiter")]
 position = Vector2(500, 300)
 entry_delay = 1.0
-drop_chance = 0.0
 
 [node name="Zipper" parent="Enemies" index="2" instance=ExtResource("4_zipper")]
 position = Vector2(1400, 240)
 entry_delay = 2.0
-drop_chance = 0.0

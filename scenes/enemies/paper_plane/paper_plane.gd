@@ -162,7 +162,7 @@ func _forget_dart(i: int) -> void:
     _dart_curves.remove_at(i)
 
 
-func _start_fleeing(may_drop: bool = true) -> void:
+func _start_fleeing(beaten: bool = true) -> void:
     # NOTE (mristin):
     # The darts in flight unfold into a poof.
     for dart in _darts:
@@ -172,7 +172,7 @@ func _start_fleeing(may_drop: bool = true) -> void:
     _darts.clear()
     _dart_ages.clear()
     _dart_curves.clear()
-    super(may_drop)
+    super(beaten)
 
 
 func _energy_bar_y() -> float:

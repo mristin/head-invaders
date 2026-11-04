@@ -119,7 +119,7 @@ func _release_needles() -> void:
     _needles.clear()
 
 
-func _start_fleeing(may_drop: bool = true) -> void:
+func _start_fleeing(beaten: bool = true) -> void:
     # NOTE (mristin):
     # The hanging needles fall away harmlessly with a poof.
     for needle in _needles:
@@ -127,7 +127,7 @@ func _start_fleeing(may_drop: bool = true) -> void:
             Poof.spawn(self, needle.global_position, 18.0, Color(0.6, 1.0, 0.5))
             needle.queue_free()
     _needles.clear()
-    super(may_drop)
+    super(beaten)
 
 
 func _draw_body(flash: float) -> void:

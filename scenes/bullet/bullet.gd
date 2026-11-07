@@ -13,7 +13,7 @@ extends Area2D
 const SIZE: float = 2.0
 
 @export var speed: float = 1800.0
-@export var damage: int = 1
+@export var damage: int = 13
 
 var color: Color = Color.WHITE
 var direction: Vector2 = Vector2.UP

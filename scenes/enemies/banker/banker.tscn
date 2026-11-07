@@ -14,11 +14,10 @@ collision_layer = 2
 collision_mask = 0
 monitoring = false
 script = ExtResource("1_script")
-max_energy = 240
+max_energy = 4800
 radius = 225.0
 waits_for_others = true
 entry_delay = 2.0
-drop_chance = 1.0
 
 [node name="Body" type="CollisionShape2D" parent="."]
 rotation = 1.5707964

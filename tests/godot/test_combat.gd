@@ -64,8 +64,7 @@ func _calm_level(with_darts: bool) -> void:
         var enemy := child as Enemy
         enemy.entry_delay = 0.0 if with_darts or enemy is Saucer else 1000.0
         enemy._rocket_cooldown = 1000.0
-        enemy.drop_chance = 0.0
-    _level().get_node("SupplyDrops").enabled = false
+    _level().get_node("ChestDrops").enabled = false
 
 
 ## Chase all the aliens of the current level away, then the boss, which comes
@@ -105,7 +104,7 @@ func _run() -> void:
 
     var hud: Hud = _game.get_node("Hud")
     _check(
-        hud.enemy_count.text == "Aliens: 10",
+        hud.enemy_count.text == "Bad dreams: 10",
         "HUD counts the aliens (got '%s')" % hud.enemy_count.text
     )
 
@@ -137,7 +136,7 @@ func _run() -> void:
     # NOTE: Other saucers in the line of fire may flee as well.
     var still_fighting := _fighting_enemies().size()
     _check(
-        still_fighting < 10 and hud.enemy_count.text == "Aliens: %d" % still_fighting,
+        still_fighting < 10 and hud.enemy_count.text == "Bad dreams: %d" % still_fighting,
         (
             "HUD counts the fled aliens off (got '%s', expected %d)"
             % [hud.enemy_count.text, still_fighting]
@@ -209,8 +208,8 @@ func _run() -> void:
     projectiles.launch(rocket, ship.global_position - Vector2(0, 250))
     await _wait(0.8)
     _check(
-        ship.health == health_before - 1,
-        "a rocket costs 1 health (%d -> %d)" % [health_before, ship.health]
+        ship.health == health_before - 14,
+        "a rocket costs 14 health (%d -> %d)" % [health_before, ship.health]
     )
 
     ship._fire_cooldown = 1000.0
@@ -283,7 +282,7 @@ func _run() -> void:
         ship.is_alive() and ship.health == ship.max_health and is_zero_approx(ship.hull.rotation),
         "the spaceship gets a fresh shield"
     )
-    _check(hud.enemy_count.text == "Aliens: 10", "the restarted level has all the aliens again")
+    _check(hud.enemy_count.text == "Bad dreams: 10", "the restarted level has all the aliens again")
     # endregion
 
     # region All the aliens fled means the next level

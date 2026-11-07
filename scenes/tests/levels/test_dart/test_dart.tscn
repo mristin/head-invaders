@@ -5,9 +5,6 @@
 
 [node name="TestDart" instance=ExtResource("1_base")]
 
-[node name="SupplyDrops" parent="."]
-enabled = false
-
 [node name="Dart1" parent="Enemies" index="0" instance=ExtResource("3_dart")]
 position = Vector2(600, 0)
 entry_delay = 0

@@ -13,14 +13,9 @@ shader = ExtResource("2_desert")
 [node name="Stars" parent="."]
 material = SubResource("ShaderMaterial_desert")
 
-[node name="SupplyDrops" parent="."]
-enabled = false
-
 [node name="SandWorm" parent="Enemies" index="0" instance=ExtResource("3_sand_worm")]
 position = Vector2(700, 0)
-drop_chance = 0.0
 
 [node name="MirageFox" parent="Enemies" index="1" instance=ExtResource("4_mirage_fox")]
 position = Vector2(1200, 300)
 entry_delay = 1.0
-drop_chance = 0.0

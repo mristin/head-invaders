@@ -11,10 +11,9 @@ collision_layer = 2
 collision_mask = 0
 monitoring = false
 script = ExtResource("1_script")
-max_energy = 7
+max_energy = 105
 radius = 110.0
 rocket_speed = 340.0
-drop_chance = 0.4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -10)

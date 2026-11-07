@@ -3,8 +3,8 @@ class_name Chest
 extends Area2D
 
 ## A treasure chest floating down the screen. The players shoot it open, and it
-## gives out the boosters: always a bubble, which only the chests give, and
-## some other pickups.
+## gives out a booster. The boosters come only from the chests, so that the
+## players have to earn them.
 ##
 ## The chests come in several looks, from a wooden treasure chest to a painted
 ## egg, so that each one is a little surprise.
@@ -19,20 +19,24 @@ const GROUP: String = "chests"
 
 const _SCENE_PATH: String = "res://scenes/chest/chest.tscn"
 
-## How many hits it takes to open the chest.
-@export var max_hits: int = 8
+## How many gold coins show how sturdy the chest still is.
+const _COINS: int = 8
+
+## How sturdy the chest is. Like the energy of the enemies, it counts in tenths
+## of a hit, so a bullet takes 13.
+@export var max_strength: int = 80
 
 @export var fall_speed: float = 70.0
 @export var sway_amplitude: float = 40.0
 @export var radius: float = 84.0
 
-## How many boosters the chest gives, including the bubble.
-@export var booster_count: int = 3
+## Give a booster of one of these kinds; of any kind if empty.
+@export var kinds: Array[Pickup.Kind] = []
 
 ## How long the open chest stays before it fades away, in seconds.
 @export var open_duration: float = 0.8
 
-var hits_left: int = 0
+var strength_left: int = 0
 
 var style: Style = Style.WOODEN
 
@@ -43,20 +47,27 @@ var _opened_for: float = -1.0
 
 
 ## Drop a chest at the given global position in the current level, in one of
-## the given styles, or in any style if none are given.
-static func drop(near: Node, global_pos: Vector2, styles: Array[Style] = []) -> void:
+## the given styles, or in any style if none are given. The chest gives
+## a booster of one of the given kinds, or of any kind if none are given.
+static func drop(
+    near: Node,
+    global_pos: Vector2,
+    styles: Array[Style] = [],
+    booster_kinds: Array[Pickup.Kind] = []
+) -> void:
     var projectiles := Projectiles.of(near)
     if projectiles == null:
         return
 
     var chest: Chest = load(_SCENE_PATH).instantiate()
     chest.style = Style.values().pick_random() if styles.is_empty() else styles.pick_random()
+    chest.kinds = booster_kinds
     projectiles.launch(chest, global_pos)
 
 
 func _ready() -> void:
     add_to_group(GROUP)
-    hits_left = max_hits
+    strength_left = max_strength
     _base_x = position.x
     _time = randf() * TAU
 
@@ -69,9 +80,9 @@ func take_damage(amount: int) -> void:
     if is_open():
         return
 
-    hits_left = maxi(0, hits_left - amount)
+    strength_left = maxi(0, strength_left - amount)
     _shake = 0.15
-    if hits_left == 0:
+    if strength_left == 0:
         _open()
     queue_redraw()
 
@@ -81,14 +92,10 @@ func _open() -> void:
     set_deferred("monitorable", false)
     Poof.spawn(self, global_position, radius * 1.2, Color(1.0, 0.85, 0.3))
 
-    # NOTE (mristin):
-    # We spread the boosters so that several players can catch them.
-    var kinds: Array[Pickup.Kind] = [Pickup.Kind.BUBBLE]
-    for i in range(booster_count - 1):
-        kinds.append(Pickup.random_kind())
-    for i in range(kinds.size()):
-        var offset := (i - (kinds.size() - 1) / 2.0) * radius * 1.4
-        Pickup.drop(self, global_position + Vector2(offset, 0), kinds[i])
+    var kind: Pickup.Kind = (
+        Pickup.Kind.values().pick_random() if kinds.is_empty() else kinds.pick_random()
+    )
+    Pickup.drop(self, global_position, kind)
 
 
 func _physics_process(delta: float) -> void:
@@ -150,11 +157,12 @@ func _draw() -> void:
         return
 
     # NOTE (mristin):
-    # The gold coins below show how many more hits open the chest.
-    var spacing := minf(r * 0.28, r * 2.0 / max_hits)
-    for i in range(max_hits):
-        var center := Vector2((i - (max_hits - 1) / 2.0) * spacing, r * 0.98)
-        var coin := Color(1.0, 0.8, 0.25) if i < hits_left else Color(0.2, 0.15, 0.1, 0.8)
+    # The gold coins below show how much more it takes to open the chest.
+    var spacing := minf(r * 0.28, r * 2.0 / _COINS)
+    var coins_left := ceili(float(_COINS * strength_left) / float(max_strength))
+    for i in range(_COINS):
+        var center := Vector2((i - (_COINS - 1) / 2.0) * spacing, r * 0.98)
+        var coin := Color(1.0, 0.8, 0.25) if i < coins_left else Color(0.2, 0.15, 0.1, 0.8)
         draw_circle(center, spacing * 0.38, coin)
 
 

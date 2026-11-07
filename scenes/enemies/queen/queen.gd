@@ -27,7 +27,7 @@ const _DART_SCENE: PackedScene = preload("res://scenes/enemies/dart/dart.tscn")
 @export var fan_angle: float = 0.3
 
 ## The shower: the number of rockets spread over the lower half circle.
-@export var shower_size: int = 6
+@export var shower_size: int = 3
 @export var shower_rocket_speed: float = 280.0
 
 ## How many darts she calls at once, and how many may fly at most.
@@ -106,16 +106,15 @@ func _call_darts() -> void:
         var dart := _summon(
             _DART_SCENE, global_position + Vector2(side * radius * 0.8, radius * 0.2)
         )
-        dart.drop_chance = 0.1
-        dart.max_energy = 2
+        dart.max_energy = 30
 
     Poof.spawn(self, global_position + Vector2(0, radius * 0.3), radius * 0.5, Color(1, 0.6, 0.9))
 
 
-func _start_fleeing(may_drop: bool = true) -> void:
+func _start_fleeing(beaten: bool = true) -> void:
     # NOTE (mristin):
     # Her darts follow her home; see Enemy.minions.
-    super(may_drop)
+    super(beaten)
     Poof.spawn(self, global_position, radius * 1.5, Color(1.0, 0.6, 0.9))
 
 

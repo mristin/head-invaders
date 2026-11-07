@@ -15,3 +15,4 @@ material = SubResource("ShaderMaterial_alps")
 [node name="CuckooClock" parent="Enemies" index="0" instance=ExtResource("3_cuckoo_clock")]
 position = Vector2(960, 290)
 entry_delay = 0.5
+max_energy = 3920

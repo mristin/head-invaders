@@ -81,10 +81,10 @@ func _move(delta: float) -> void:
         _rest_left = rest_duration
 
 
-func _start_fleeing(may_drop: bool = true) -> void:
-    super(may_drop)
+func _start_fleeing(beaten: bool = true) -> void:
+    super(beaten)
 
-    if not splits or not may_drop:
+    if not splits or not beaten:
         return
 
     # NOTE (mristin):
@@ -94,8 +94,7 @@ func _start_fleeing(may_drop: bool = true) -> void:
         var little := _summon(scene, global_position, false) as Slime
         little.splits = false
         little.scale = Vector2.ONE * little_scale
-        little.max_energy = maxi(1, max_energy / 3)
-        little.drop_chance = drop_chance * 0.5
+        little.max_energy = maxi(10, max_energy / 3)
         little.first_direction = side
         little.hop_distance = hop_distance * 0.7
         little.hop_height = hop_height * 0.7

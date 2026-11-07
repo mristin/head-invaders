@@ -18,7 +18,7 @@ enum Kind {
     ## Recharge the shield.
     SHIELD,
     ## Wrap the spaceship in a bubble, which keeps off all the damage for
-    ## a while. Only the treasure chests give it.
+    ## a while.
     BUBBLE,
 }
 
@@ -45,14 +45,6 @@ static func drop(near: Node, global_pos: Vector2, pickup_kind: Kind) -> void:
     var pickup: Pickup = load(_SCENE_PATH).instantiate()
     pickup.kind = pickup_kind
     projectiles.launch(pickup, global_pos)
-
-
-## Return a random kind, except the bubble, which only the chests give.
-static func random_kind() -> Kind:
-    return (
-        ([Kind.RAPID_FIRE, Kind.SPREAD_SHOT, Kind.ROCKETS, Kind.SHIELD] as Array[Kind])
-        . pick_random()
-    )
 
 
 static func color_of(pickup_kind: Kind) -> Color:

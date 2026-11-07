@@ -25,16 +25,19 @@ const GROUP: String = "spaceships"
 const _BULLET_SCENE_PATH: String = "res://scenes/bullet/bullet.tscn"
 const _MISSILE_SCENE_PATH: String = "res://scenes/missile/missile.tscn"
 
+## How thick we draw the shield ring, so that it is easy to see from a distance.
+const RING_WIDTH: float = 14.0
+
 ## Radius of the shield ring, which shows the remaining health.
 @export var radius: float = 58.0
 
-@export var max_health: int = 10
+@export var max_health: int = 100
 
 ## The damage the spaceship takes when it clashes with an enemy.
-@export var collision_damage: int = 2
+@export var collision_damage: int = 20
 
 ## The damage the enemy takes in the same clash.
-@export var ramming_damage: int = 2
+@export var ramming_damage: int = 26
 
 ## Seconds between the shots.
 @export var fire_interval: float = 0.2
@@ -53,7 +56,7 @@ const _MISSILE_SCENE_PATH: String = "res://scenes/missile/missile.tscn"
 @export var bubble_duration: float = 8.0
 
 ## How much of the shield a shield pickup recharges.
-@export var shield_recharge: int = 4
+@export var shield_recharge: int = 40
 
 ## With the rapid fire, the spaceship fires this many times as often, and the
 ## bullets fly this many times as fast.
@@ -320,7 +323,11 @@ func _draw() -> void:
     # NOTE (mristin):
     # The ring makes the player's color easy to spot and works as the shield:
     # it shrinks with each hit, starting from the top and going clockwise.
-    draw_arc(Vector2.ZERO, radius, 0.0, TAU, 64, Color(color, 0.15), 3.0, true)
+    #
+    # We draw it thick, on a dark backing, so that the players see from far away
+    # how much shield they have left.
+    draw_arc(Vector2.ZERO, radius, 0.0, TAU, 64, Color(0.0, 0.0, 0.0, 0.45), RING_WIDTH + 6.0, true)
+    draw_arc(Vector2.ZERO, radius, 0.0, TAU, 64, Color(color, 0.25), RING_WIDTH, true)
 
     if not is_alive():
         for i in range(4):
@@ -356,8 +363,8 @@ func _draw() -> void:
             start,
             start + TAU * fraction,
             maxi(4, int(64 * fraction)),
-            Color(color, 0.85),
-            5.0,
+            Color(color.lightened(0.15), 1.0),
+            RING_WIDTH,
             true
         )
 
@@ -368,7 +375,7 @@ func _draw() -> void:
     kinds.sort()
     for i in range(kinds.size()):
         var kind: Pickup.Kind = kinds[i]
-        var center := Vector2((i - (kinds.size() - 1) / 2.0) * 56.0, radius + 34.0)
+        var center := Vector2((i - (kinds.size() - 1) / 2.0) * 56.0, radius + 42.0)
         var boost_color := Pickup.color_of(kind)
         draw_circle(center, 24.0, Color(boost_color.darkened(0.6), 0.85))
         draw_arc(

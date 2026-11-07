@@ -2,6 +2,8 @@
 
 [ext_resource type="PackedScene" path="res://scenes/levels/base/base.tscn" id="1_base"]
 [ext_resource type="Shader" path="res://scenes/levels/ninth/alps.gdshader" id="2_alps"]
+[ext_resource type="Script" path="res://scenes/levels/base/prerendered_ground.gd" id="10_prerendered_ground"]
+[ext_resource type="Shader" path="res://scenes/levels/ninth/alps_tile.gdshader" id="11_alps_tile"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/bell_cow/bell_cow.tscn" id="3_bell_cow"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/yodeler/yodeler.tscn" id="4_yodeler"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/marmot/marmot.tscn" id="5_marmot"]
@@ -9,6 +11,7 @@
 [ext_resource type="PackedScene" path="res://scenes/enemies/cuckoo_clock/cuckoo_clock.tscn" id="7_cuckoo_clock"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_alps"]
+resource_local_to_scene = true
 shader = ExtResource("2_alps")
 
 [node name="Ninth" instance=ExtResource("1_base")]
@@ -16,10 +19,19 @@ shader = ExtResource("2_alps")
 [node name="Stars" parent="."]
 material = SubResource("ShaderMaterial_alps")
 
+[node name="Ground" type="SubViewport" parent="." node_paths=PackedStringArray("target")]
+disable_3d = true
+transparent_bg = true
+size = Vector2i(1920, 4320)
+render_target_update_mode = 1
+script = ExtResource("10_prerendered_ground")
+tile_shader = ExtResource("11_alps_tile")
+target = NodePath("../Stars")
+keeps_alpha = true
+
 [node name="ChestDrops" parent="."]
 enabled = true
 styles = Array[int]([0, 2, 3])
-first_delay = 10.0
 
 [node name="Wave1BellCow" parent="Enemies" index="0" instance=ExtResource("3_bell_cow")]
 position = Vector2(700, 0)

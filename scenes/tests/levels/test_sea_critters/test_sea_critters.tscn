@@ -2,11 +2,15 @@
 
 [ext_resource type="PackedScene" path="res://scenes/levels/base/base.tscn" id="1_base"]
 [ext_resource type="Shader" path="res://scenes/levels/fourth/ocean.gdshader" id="2_ocean"]
+[ext_resource type="Script" path="res://scenes/levels/base/prerendered_ground.gd" id="10_prerendered_ground"]
+[ext_resource type="Shader" path="res://scenes/levels/fourth/ocean_tile.gdshader" id="11_ocean_tile"]
+[ext_resource type="Shader" path="res://scenes/levels/fourth/ocean_caustic_tile.gdshader" id="12_ocean_caustic_tile"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/shark/shark.tscn" id="3_shark"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/jellyfish/jellyfish.tscn" id="4_jellyfish"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/octopus/octopus.tscn" id="5_octopus"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ocean"]
+resource_local_to_scene = true
 shader = ExtResource("2_ocean")
 
 [node name="TestSeaCritters" instance=ExtResource("1_base")]
@@ -14,19 +18,31 @@ shader = ExtResource("2_ocean")
 [node name="Stars" parent="."]
 material = SubResource("ShaderMaterial_ocean")
 
-[node name="SupplyDrops" parent="."]
-enabled = false
+[node name="Ground" type="SubViewport" parent="." node_paths=PackedStringArray("target")]
+disable_3d = true
+size = Vector2i(1920, 4160)
+render_target_update_mode = 1
+script = ExtResource("10_prerendered_ground")
+tile_shader = ExtResource("11_ocean_tile")
+target = NodePath("../Stars")
+
+[node name="Shimmer" type="SubViewport" parent="." node_paths=PackedStringArray("target")]
+disable_3d = true
+size = Vector2i(256, 256)
+render_target_update_mode = 4
+script = ExtResource("10_prerendered_ground")
+tile_shader = ExtResource("12_ocean_caustic_tile")
+target = NodePath("../Stars")
+parameter = &"caustic_tile"
+keeps_updating = true
 
 [node name="Shark" parent="Enemies" index="0" instance=ExtResource("3_shark")]
 position = Vector2(960, 300)
-drop_chance = 0.0
 
 [node name="Jellyfish" parent="Enemies" index="1" instance=ExtResource("4_jellyfish")]
 position = Vector2(700, 0)
 entry_delay = 1.0
-drop_chance = 0.0
 
 [node name="Octopus" parent="Enemies" index="2" instance=ExtResource("5_octopus")]
 position = Vector2(1300, 240)
 entry_delay = 2.0
-drop_chance = 0.0

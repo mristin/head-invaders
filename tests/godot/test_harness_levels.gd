@@ -279,7 +279,7 @@ func _run() -> void:
         m.boosts_seen.has(Pickup.Kind.BUBBLE),
         "chests: the player catches the bubble (%s)" % str(m.boosts_seen.keys())
     )
-    _check(m.min_health == 10, "chests: the chests never hurt (min health %d)" % m.min_health)
+    _check(m.min_health == 100, "chests: the chests never hurt (min health %d)" % m.min_health)
 
     m = await _play_case(
         "mothership",
@@ -447,7 +447,7 @@ func _run() -> void:
         tests + "/test_enemy_rockets/test_enemy_rockets_players.gd",
         10.0
     )
-    _check(m.min_health < 10, "enemy rockets: the player is hit (min health %d)" % m.min_health)
+    _check(m.min_health < 100, "enemy rockets: the player is hit (min health %d)" % m.min_health)
 
     m = await _play_case(
         "pickups",
@@ -467,7 +467,7 @@ func _run() -> void:
         14.0
     )
     _check(
-        m.min_health < 10,
+        m.min_health < 100,
         "leave and return: the player takes damage (min health %d)" % m.min_health
     )
     _check(m.left_health.has("0:0"), "leave and return: the player leaves")

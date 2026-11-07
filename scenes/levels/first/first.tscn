@@ -10,6 +10,9 @@
 
 [node name="First" instance=ExtResource("1_base")]
 
+[node name="ChestDrops" parent="."]
+enabled = true
+
 [node name="Wave1Saucer1" parent="Enemies" index="0" instance=ExtResource("2_saucer")]
 position = Vector2(640, 200)
 

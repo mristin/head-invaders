@@ -154,16 +154,15 @@ func _call_zippers() -> void:
         var zipper := _summon(
             _ZIPPER_SCENE, global_position + Vector2(side * radius * 0.5, radius * 0.3)
         )
-        zipper.drop_chance = 0.1
-        zipper.max_energy = 2
+        zipper.max_energy = 30
 
     Poof.spawn(self, global_position + Vector2(0, radius * 0.3), radius * 0.4, Color(0.6, 1, 0.8))
 
 
-func _start_fleeing(may_drop: bool = true) -> void:
+func _start_fleeing(beaten: bool = true) -> void:
     # NOTE (mristin):
     # Its zippers follow it home; see Enemy.minions.
-    super(may_drop)
+    super(beaten)
     _volleys_left = 0
     Poof.spawn(self, global_position, radius * 1.5, Color(0.6, 1.0, 0.8))
 

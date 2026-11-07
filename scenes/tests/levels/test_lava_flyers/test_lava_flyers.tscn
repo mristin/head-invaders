@@ -13,14 +13,9 @@ shader = ExtResource("2_lava")
 [node name="Stars" parent="."]
 material = SubResource("ShaderMaterial_lava")
 
-[node name="SupplyDrops" parent="."]
-enabled = false
-
 [node name="Dragonling" parent="Enemies" index="0" instance=ExtResource("3_dragonling")]
 position = Vector2(960, 260)
-drop_chance = 0.0
 
 [node name="JetDwarf" parent="Enemies" index="1" instance=ExtResource("4_jet_dwarf")]
 position = Vector2(400, 220)
 entry_delay = 1.0
-drop_chance = 0.0

@@ -2,7 +2,6 @@
 
 [ext_resource type="Shader" path="res://scenes/levels/base/space.gdshader" id="1_space"]
 [ext_resource type="PackedScene" path="res://scenes/projectiles/projectiles.tscn" id="2_projectiles"]
-[ext_resource type="PackedScene" path="res://scenes/supply_drops/supply_drops.tscn" id="3_supply_drops"]
 [ext_resource type="PackedScene" path="res://scenes/chest_drops/chest_drops.tscn" id="4_chest_drops"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_space"]
@@ -27,7 +26,5 @@ mouse_filter = 2
 [node name="Enemies" type="Node2D" parent="."]
 
 [node name="Projectiles" parent="." instance=ExtResource("2_projectiles")]
-
-[node name="SupplyDrops" parent="." instance=ExtResource("3_supply_drops")]
 
 [node name="ChestDrops" parent="." instance=ExtResource("4_chest_drops")]

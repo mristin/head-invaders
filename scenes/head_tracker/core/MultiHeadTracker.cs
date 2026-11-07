@@ -202,6 +202,15 @@ namespace HeadInvaders.Tracking
     /// resolve the ambiguous matches and to recognize the players who come back
     /// after they were lost.
     /// </para>
+    ///
+    /// <para>
+    /// A new head never gets a new identity while a player is away: otherwise
+    /// a player could step out of the camera and back in for a fresh spaceship.
+    /// The new head takes over the identity of the lost player who looks the
+    /// most alike, or of the one lost most recently if we can not compare the
+    /// appearances. This also hands the spaceship over when the players take
+    /// turns, which is fine for the game.
+    /// </para>
     /// </remarks>
     public sealed class MultiHeadTracker
     {
@@ -244,29 +253,14 @@ namespace HeadInvaders.Tracking
         public float TentativeTimeout = 0.25f;
 
         /// <summary>
-        /// Remember the appearance of the lost players for this many seconds so
-        /// that we can recognize them when they come back.
-        /// </summary>
-        public float ReIdMemory = 30f;
-
-        /// <summary>
-        /// Recognize a lost player only if the cosine similarity of the
-        /// appearances is at least this high.
+        /// Remember the lost players for this many seconds so that we can
+        /// recognize them when they come back.
         /// </summary>
         /// <remarks>
-        /// With OSNet x0.25 on our test photos, the same player scored at least
-        /// 0.89, while different players scored up to 0.84 (when wearing the same
-        /// uniform). A wrong match gives a new player somebody else's ship, while
-        /// a missed match only gives a returning player a new ship, so we err on
-        /// the side of missing.
+        /// We remember them longer than a level lasts, since a player who comes
+        /// back too late would get a fresh spaceship.
         /// </remarks>
-        public float ReIdThreshold = 0.85f;
-
-        /// <summary>
-        /// Recognize a lost player only if they look this much more similar than
-        /// the second most similar lost player.
-        /// </summary>
-        public float ReIdMargin = 0.05f;
+        public float ReIdMemory = 600f;
 
         /// <summary>How much the appearance counts when resolving ambiguous matches.</summary>
         public float AppearanceWeight = 1f;
@@ -287,8 +281,8 @@ namespace HeadInvaders.Tracking
 
         private readonly List<Track> _tracks = new List<Track>();
 
-        private readonly List<(int Id, float[] Embedding, double LostAt)> _lost = (
-            new List<(int, float[], double)>()
+        private readonly List<(int Id, float[]? Embedding, double LostAt)> _lost = (
+            new List<(int, float[]?, double)>()
         );
 
         private int _nextId = 0;
@@ -539,48 +533,58 @@ namespace HeadInvaders.Tracking
         }
 
         /// <summary>
-        /// Confirm the head, and give it back the identity of a lost player if
-        /// they look alike.
+        /// Confirm the head, and give it the identity of a lost player, if any.
         /// </summary>
         private void Confirm(Track track)
         {
             track.Confirmed = true;
 
-            if (track.Embedding != null)
+            int index = PickLost(track.Embedding);
+            if (index >= 0)
             {
-                int bestIndex = -1;
-                float bestSimilarity = float.NegativeInfinity;
-                float secondBestSimilarity = float.NegativeInfinity;
-
-                for (int i = 0; i < _lost.Count; i++)
-                {
-                    float similarity = OsNetModel.CosineSimilarity(
-                        track.Embedding, _lost[i].Embedding
-                    );
-                    if (similarity > bestSimilarity)
-                    {
-                        secondBestSimilarity = bestSimilarity;
-                        bestSimilarity = similarity;
-                        bestIndex = i;
-                    }
-                    else if (similarity > secondBestSimilarity)
-                    {
-                        secondBestSimilarity = similarity;
-                    }
-                }
-
-                if (
-                    bestIndex >= 0
-                    && bestSimilarity >= ReIdThreshold
-                    && bestSimilarity - secondBestSimilarity >= ReIdMargin
-                )
-                {
-                    track.Id = _lost[bestIndex].Id;
-                    _lost.RemoveAt(bestIndex);
-                }
+                // NOTE (mristin):
+                // The identity is new to this head, so the embedding of the head
+                // carries over, while the old one of the lost player is dropped.
+                track.Id = _lost[index].Id;
+                _lost.RemoveAt(index);
             }
 
             OnAppeared?.Invoke(track.Id, track.Position);
+        }
+
+        /// <summary>
+        /// Pick the lost player who looks the most like the given appearance, or
+        /// the one lost most recently if we can not compare the appearances.
+        /// </summary>
+        /// <returns>Index in the lost players, or -1 if nobody is lost.</returns>
+        private int PickLost(float[]? embedding)
+        {
+            int mostSimilar = -1;
+            float bestSimilarity = float.NegativeInfinity;
+            int mostRecent = -1;
+
+            for (int i = 0; i < _lost.Count; i++)
+            {
+                if (mostRecent < 0 || _lost[i].LostAt > _lost[mostRecent].LostAt)
+                {
+                    mostRecent = i;
+                }
+
+                var lostEmbedding = _lost[i].Embedding;
+                if (embedding == null || lostEmbedding == null)
+                {
+                    continue;
+                }
+
+                float similarity = OsNetModel.CosineSimilarity(embedding, lostEmbedding);
+                if (similarity > bestSimilarity)
+                {
+                    bestSimilarity = similarity;
+                    mostSimilar = i;
+                }
+            }
+
+            return mostSimilar >= 0 ? mostSimilar : mostRecent;
         }
 
         private void ForgetUnseen(double timestamp)
@@ -600,10 +604,7 @@ namespace HeadInvaders.Tracking
 
                 if (track.Confirmed)
                 {
-                    if (track.Embedding != null)
-                    {
-                        _lost.Add((track.Id, track.Embedding, timestamp));
-                    }
+                    _lost.Add((track.Id, track.Embedding, timestamp));
                     OnLost?.Invoke(track.Id);
                 }
             }

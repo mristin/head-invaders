@@ -10,11 +10,10 @@ collision_layer = 2
 collision_mask = 0
 monitoring = false
 script = ExtResource("1_script")
-max_energy = 5
+max_energy = 75
 radius = 60.0
 min_rocket_interval = 2.0
 max_rocket_interval = 4.0
-drop_chance = 0.3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_planet")

@@ -15,4 +15,4 @@ material = SubResource("ShaderMaterial_desert")
 [node name="GreatScarab" parent="Enemies" index="0" instance=ExtResource("3_great_scarab")]
 position = Vector2(960, 210)
 entry_delay = 0.5
-max_energy = 110
+max_energy = 770

@@ -16,14 +16,9 @@ visible = false
 [node name="ZurichMap" parent="." instance=ExtResource("2_map")]
 start_distance = 500.0
 
-[node name="SupplyDrops" parent="."]
-enabled = false
-
 [node name="Swan" parent="Enemies" index="0" instance=ExtResource("3_swan")]
 position = Vector2(1100, 0)
-drop_chance = 0.0
 
 [node name="LimmatSwimmer" parent="Enemies" index="1" instance=ExtResource("4_swimmer")]
 position = Vector2(960, 0)
 entry_delay = 6.0
-drop_chance = 0.0

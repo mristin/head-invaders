@@ -51,7 +51,7 @@ const _SCENE_PATH: String = "res://scenes/rocket/rocket.tscn"
 ## How many rockets burst so far, e.g., for the tests.
 static var bursts: int = 0
 
-@export var damage: int = 1
+@export var damage: int = 14
 @export var lifetime: float = 8.0
 
 var velocity: Vector2 = Vector2.ZERO

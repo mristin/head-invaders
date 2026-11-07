@@ -2,6 +2,8 @@
 
 [ext_resource type="PackedScene" path="res://scenes/levels/base/base.tscn" id="1_base"]
 [ext_resource type="Shader" path="res://scenes/levels/seventh/arctic.gdshader" id="2_arctic"]
+[ext_resource type="Script" path="res://scenes/levels/base/prerendered_ground.gd" id="10_prerendered_ground"]
+[ext_resource type="Shader" path="res://scenes/levels/seventh/arctic_tile.gdshader" id="11_arctic_tile"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/penguin/penguin.tscn" id="3_penguin"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/snowy_owl/snowy_owl.tscn" id="4_snowy_owl"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/polar_bear/polar_bear.tscn" id="5_polar_bear"]
@@ -10,6 +12,7 @@
 [ext_resource type="PackedScene" path="res://scenes/enemies/giant_walrus/giant_walrus.tscn" id="8_giant_walrus"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_arctic"]
+resource_local_to_scene = true
 shader = ExtResource("2_arctic")
 
 [node name="Seventh" instance=ExtResource("1_base")]
@@ -17,10 +20,17 @@ shader = ExtResource("2_arctic")
 [node name="Stars" parent="."]
 material = SubResource("ShaderMaterial_arctic")
 
+[node name="Ground" type="SubViewport" parent="." node_paths=PackedStringArray("target")]
+disable_3d = true
+size = Vector2i(1920, 4320)
+render_target_update_mode = 1
+script = ExtResource("10_prerendered_ground")
+tile_shader = ExtResource("11_arctic_tile")
+target = NodePath("../Stars")
+
 [node name="ChestDrops" parent="."]
 enabled = true
 styles = Array[int]([3, 2, 4])
-first_delay = 10.0
 
 [node name="Wave1Penguin" parent="Enemies" index="0" instance=ExtResource("3_penguin")]
 position = Vector2(700, 0)

@@ -10,12 +10,11 @@ collision_layer = 2
 collision_mask = 0
 monitoring = false
 script = ExtResource("1_script")
-max_energy = 7
+max_energy = 105
 radius = 123.5
 min_rocket_interval = 3.0
 max_rocket_interval = 4.2
 rocket_speed = 190.0
-drop_chance = 0.3
 ground_speed = 40.0
 fire_above = 0.55
 

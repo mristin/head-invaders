@@ -16,14 +16,9 @@ visible = false
 [node name="ZurichMap" parent="." instance=ExtResource("2_map")]
 start_distance = 1700.0
 
-[node name="SupplyDrops" parent="."]
-enabled = false
-
 [node name="Pigeon" parent="Enemies" index="0" instance=ExtResource("3_pigeon")]
 position = Vector2(700, 260)
-drop_chance = 0.0
 
 [node name="Tram" parent="Enemies" index="1" instance=ExtResource("4_tram")]
 position = Vector2(1100, 0)
 entry_delay = 1.0
-drop_chance = 0.0

@@ -189,34 +189,68 @@ namespace HeadInvaders.Tests
         }
 
         [Fact]
-        public void Test_that_a_new_player_is_not_mistaken_for_a_lost_one()
+        public void Test_that_a_returning_player_who_looks_different_is_still_recognized()
         {
             var harness = new Harness();
 
+            // NOTE (mristin):
+            // The light changed, so Alice looks different, but nobody else is
+            // away; she must not get a fresh spaceship.
             harness.Steps(10, _ => Appearance(1f, 0f, 0f), Head(0.3f, 0.5f));
             harness.Steps(30, null);
 
             harness.Steps(5, _ => Appearance(0f, 1f, 0f), Head(0.3f, 0.5f));
 
-            Assert.Equal(new[] { "appeared 0", "lost 0", "appeared 1" },
+            Assert.Equal(new[] { "appeared 0", "lost 0", "appeared 0" },
                 harness.Events.Where(e => !e.StartsWith("moved")));
         }
 
         [Fact]
-        public void Test_that_an_ambiguous_returning_player_gets_a_new_identity()
+        public void Test_that_a_returning_player_gets_the_identity_of_the_most_similar_lost_one()
         {
             var harness = new Harness();
 
-            // NOTE (mristin):
-            // Two players who look nearly the same leave, and one of them returns.
-            // We can not tell who, so we do not guess.
-            harness.Steps(10, d => d.CenterX < 0.5f ? Appearance(1f, 0f, 0f) : Appearance(1f, 0.02f, 0f),
-                Head(0.3f, 0.5f), Head(0.7f, 0.5f));
+            harness.Steps(
+                10,
+                d => d.CenterX < 0.5f ? Appearance(1f, 0f, 0f) : Appearance(0f, 1f, 0f),
+                Head(0.3f, 0.5f), Head(0.7f, 0.5f)
+            );
             harness.Steps(30, null);
 
-            harness.Steps(5, _ => Appearance(1f, 0.01f, 0f), Head(0.5f, 0.5f));
+            // NOTE (mristin):
+            // The player on the right comes back on the left.
+            harness.Steps(5, _ => Appearance(0.1f, 1f, 0f), Head(0.3f, 0.5f));
 
-            Assert.Equal("appeared 2", harness.EventsOf("appeared").Last());
+            Assert.Equal("appeared 1", harness.EventsOf("appeared").Last());
+        }
+
+        [Fact]
+        public void Test_that_without_the_appearance_the_most_recently_lost_player_returns()
+        {
+            var harness = new Harness();
+
+            harness.Steps(10, null, Head(0.3f, 0.5f), Head(0.7f, 0.5f));
+
+            // NOTE (mristin):
+            // The player on the left leaves first, then the one on the right.
+            harness.Steps(30, null, Head(0.7f, 0.5f));
+            harness.Steps(30, null);
+
+            harness.Steps(5, null, Head(0.5f, 0.5f));
+
+            Assert.Equal(new[] { "lost 0", "lost 1" }, harness.EventsOf("lost"));
+            Assert.Equal("appeared 1", harness.EventsOf("appeared").Last());
+        }
+
+        [Fact]
+        public void Test_that_a_new_player_gets_a_new_identity_when_nobody_is_away()
+        {
+            var harness = new Harness();
+
+            harness.Steps(10, _ => Appearance(1f, 0f, 0f), Head(0.3f, 0.5f));
+            harness.Steps(5, _ => Appearance(1f, 0f, 0f), Head(0.3f, 0.5f), Head(0.7f, 0.5f));
+
+            Assert.Equal(new[] { "appeared 0", "appeared 1" }, harness.EventsOf("appeared"));
         }
 
         [Fact]

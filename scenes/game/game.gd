@@ -132,7 +132,7 @@ func set_level(level: int) -> void:
             _show_message(
                 _LEVEL_FAILED_IMAGE,
                 "Let's try again!",
-                "The aliens were too quick this time. Everybody gets a fresh shield.",
+                "The bad dreams were too quick this time. Everybody gets a fresh shield.",
                 level_message_seconds,
                 func(): set_level(level)
             )
@@ -144,7 +144,7 @@ func set_level(level: int) -> void:
                 _show_message(
                     _LEVEL_ACCOMPLISHED_IMAGE,
                     "Great job!",
-                    "The aliens flew away. Get ready for the next level!",
+                    "The bad dreams flew away. Get ready for the next world!",
                     level_message_seconds,
                     func(): set_level(level + 1)
                 )

@@ -3,7 +3,11 @@ class_name Missile
 extends Area2D
 
 ## A homing rocket launched by a spaceship. It steers towards the nearest
-## enemy and hits harder than a bullet.
+## enemy ahead of it and hits harder than a bullet.
+##
+## The rocket only steers within a cone around straight up: it never turns
+## sideways to chase the enemies at the sides, so that the players still have
+## to aim.
 ##
 ## Like the bullets, the missile only scans the enemies' and the chests'
 ## collision layers. It homes in on the enemies only, but opens a chest in
@@ -18,7 +22,10 @@ const SIZE: float = 2.0
 ## How fast the missile turns, in radians per second.
 @export var turn_rate: float = 4.0
 
-@export var damage: int = 3
+## How far the rocket may turn away from straight up, in radians.
+@export var max_angle: float = deg_to_rad(35.0)
+
+@export var damage: int = 26
 @export var lifetime: float = 4.0
 
 var direction: Vector2 = Vector2.UP
@@ -37,11 +44,14 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
     _age += delta
 
-    var target := Enemy.nearest_to(self, global_position)
+    var target := _nearest_ahead()
     if target != null:
         var wanted := global_position.direction_to(target.global_position)
         var turn := clampf(direction.angle_to(wanted), -turn_rate * delta, turn_rate * delta)
         direction = direction.rotated(turn)
+
+    var off_up := clampf(Vector2.UP.angle_to(direction), -max_angle, max_angle)
+    direction = Vector2.UP.rotated(off_up)
 
     rotation = direction.angle()
     position += direction * speed * delta
@@ -52,6 +62,33 @@ func _physics_process(delta: float) -> void:
         return
 
     queue_redraw()
+
+
+## Return the nearest enemy within the cone ahead of the rocket, or null.
+func _nearest_ahead() -> Enemy:
+    var nearest: Enemy = null
+    var nearest_distance := INF
+
+    for node in get_tree().get_nodes_in_group(Enemy.GROUP):
+        var enemy := node as Enemy
+        if (
+            enemy == null
+            or not enemy.is_alive()
+            or not enemy.has_arrived()
+            or not enemy.is_targetable()
+        ):
+            continue
+
+        var offset := enemy.global_position - global_position
+        if offset.y >= 0.0 or absf(Vector2.UP.angle_to(offset)) > max_angle:
+            continue
+
+        var distance := offset.length_squared()
+        if distance < nearest_distance:
+            nearest_distance = distance
+            nearest = enemy
+
+    return nearest
 
 
 func _on_area_entered(area: Area2D) -> void:

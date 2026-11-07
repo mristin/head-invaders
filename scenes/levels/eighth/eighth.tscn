@@ -2,6 +2,10 @@
 
 [ext_resource type="PackedScene" path="res://scenes/levels/base/base.tscn" id="1_base"]
 [ext_resource type="Shader" path="res://scenes/levels/eighth/sky.gdshader" id="2_sky"]
+[ext_resource type="Script" path="res://scenes/levels/base/prerendered_ground.gd" id="10_prerendered_ground"]
+[ext_resource type="Shader" path="res://scenes/levels/eighth/sky_ground_tile.gdshader" id="11_sky_ground_tile"]
+[ext_resource type="Shader" path="res://scenes/levels/eighth/sky_veil_tile.gdshader" id="12_sky_veil_tile"]
+[ext_resource type="Shader" path="res://scenes/levels/eighth/sky_cloud_tile.gdshader" id="13_sky_cloud_tile"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/kite/kite.tscn" id="3_kite"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/hot_air_balloon/hot_air_balloon.tscn" id="4_hot_air_balloon"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/rain_cloud/rain_cloud.tscn" id="5_rain_cloud"]
@@ -9,6 +13,7 @@
 [ext_resource type="PackedScene" path="res://scenes/enemies/storm_cloud/storm_cloud.tscn" id="7_storm_cloud"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sky"]
+resource_local_to_scene = true
 shader = ExtResource("2_sky")
 
 [node name="Eighth" instance=ExtResource("1_base")]
@@ -16,10 +21,38 @@ shader = ExtResource("2_sky")
 [node name="Stars" parent="."]
 material = SubResource("ShaderMaterial_sky")
 
+[node name="FarGround" type="SubViewport" parent="." node_paths=PackedStringArray("target")]
+disable_3d = true
+size = Vector2i(1920, 4320)
+render_target_update_mode = 1
+script = ExtResource("10_prerendered_ground")
+tile_shader = ExtResource("11_sky_ground_tile")
+target = NodePath("../Stars")
+parameter = &"ground_tile"
+
+[node name="Veils" type="SubViewport" parent="." node_paths=PackedStringArray("target")]
+disable_3d = true
+size = Vector2i(480, 1080)
+render_target_update_mode = 1
+script = ExtResource("10_prerendered_ground")
+tile_shader = ExtResource("12_sky_veil_tile")
+target = NodePath("../Stars")
+parameter = &"veil_tile"
+
+[node name="Ground" type="SubViewport" parent="." node_paths=PackedStringArray("target")]
+disable_3d = true
+transparent_bg = true
+size = Vector2i(1920, 4320)
+render_target_update_mode = 1
+script = ExtResource("10_prerendered_ground")
+tile_shader = ExtResource("13_sky_cloud_tile")
+target = NodePath("../Stars")
+parameter = &"tile"
+keeps_alpha = true
+
 [node name="ChestDrops" parent="."]
 enabled = true
 styles = Array[int]([1, 2, 3, 5])
-first_delay = 10.0
 
 [node name="Wave1Kite" parent="Enemies" index="0" instance=ExtResource("3_kite")]
 position = Vector2(650, 330)

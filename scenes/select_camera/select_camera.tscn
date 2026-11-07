@@ -1,14 +1,29 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://cqhc2slc1o353"]
 
-[ext_resource type="Script" path="res://scenes/select_camera/select_camera.gd" id="1_script"]
-[ext_resource type="Script" path="res://scenes/select_camera/spinner.gd" id="2_spinner"]
-[ext_resource type="Shader" path="res://scenes/levels/base/space.gdshader" id="3_space"]
-[ext_resource type="Texture2D" path="res://icon.svg" id="4_icon"]
+[ext_resource type="Script" uid="uid://ds0i3dtgid28m" path="res://scenes/select_camera/select_camera.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://dc6k3l441oh84" path="res://scenes/select_camera/spinner.gd" id="2_spinner"]
+[ext_resource type="Shader" uid="uid://dwjo0ylem720a" path="res://scenes/levels/base/space.gdshader" id="3_space"]
+[ext_resource type="Texture2D" uid="uid://84447amlcqqn" path="res://icon.svg" id="4_icon"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_space"]
 shader = ExtResource("3_space")
+shader_parameter/scroll_speed = 40.0
+shader_parameter/star_density = 0.025
+shader_parameter/twinkle_speed = 0.8
+shader_parameter/star_color = Color(0.55, 0.65, 0.9, 1)
+shader_parameter/star_brightness = 0.35
+shader_parameter/deep_color = Color(0, 0, 0, 1)
+shader_parameter/nebula_color = Color(0.3, 0.12, 0.5, 1)
+shader_parameter/nebula_color_2 = Color(0.3, 0.12, 0.5, 1)
+shader_parameter/nebula_strength = 0.3
+shader_parameter/nebula_scale = 420.0
+shader_parameter/planet_center = Vector2(1500, 300)
+shader_parameter/planet_radius = 0.0
+shader_parameter/planet_color = Color(0.25, 0.4, 0.5, 1)
+shader_parameter/planet_ring_color = Color(0.5, 0.45, 0.35, 1)
+shader_parameter/planet_slowness = 40.0
 
-[node name="SelectCamera" type="Control"]
+[node name="SelectCamera" type="Control" unique_id=1993285806]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,7 +32,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_script")
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="." unique_id=2109544441]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -26,7 +41,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="Stars" type="ColorRect" parent="."]
+[node name="Stars" type="ColorRect" parent="." unique_id=44585846]
 material = SubResource("ShaderMaterial_space")
 layout_mode = 1
 anchors_preset = 15
@@ -36,7 +51,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Icon" type="TextureRect" parent="."]
+[node name="Icon" type="TextureRect" parent="." unique_id=871766148]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -50,7 +65,7 @@ texture = ExtResource("4_icon")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Title" type="Label" parent="."]
+[node name="Title" type="Label" parent="." unique_id=1073970211]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -65,7 +80,7 @@ text = "Head Invaders"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Story" type="Label" parent="."]
+[node name="Story" type="Label" parent="." unique_id=1208955477]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -83,7 +98,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="HowToPlay" type="Label" parent="."]
+[node name="HowToPlay" type="Label" parent="." unique_id=580067221]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -101,7 +116,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="Status" type="Label" parent="."]
+[node name="Status" type="Label" parent="." unique_id=1705992234]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -120,7 +135,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="Spinner" type="Control" parent="."]
+[node name="Spinner" type="Control" parent="." unique_id=2024415152]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -135,7 +150,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_spinner")
 
-[node name="SelectionPart" type="Control" parent="."]
+[node name="SelectionPart" type="Control" parent="." unique_id=1684833393]
 visible = false
 layout_mode = 1
 anchors_preset = 8
@@ -148,15 +163,14 @@ offset_bottom = 230.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="CameraOption" type="OptionButton" parent="SelectionPart"]
+[node name="CameraOption" type="OptionButton" parent="SelectionPart" unique_id=934330677]
 layout_mode = 0
 offset_left = -300.0
-offset_top = 0.0
 offset_right = 300.0
 offset_bottom = 48.0
 theme_override_font_sizes/font_size = 24
 
-[node name="StartButton" type="Button" parent="SelectionPart"]
+[node name="StartButton" type="Button" parent="SelectionPart" unique_id=1097654035]
 layout_mode = 0
 offset_left = -80.0
 offset_top = 80.0

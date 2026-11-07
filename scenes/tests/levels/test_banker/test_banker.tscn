@@ -18,3 +18,4 @@ start_distance = 2800.0
 [node name="Banker" parent="Enemies" index="0" instance=ExtResource("3_banker")]
 position = Vector2(960, 200)
 entry_delay = 0.5
+max_energy = 1680

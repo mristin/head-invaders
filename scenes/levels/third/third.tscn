@@ -2,6 +2,8 @@
 
 [ext_resource type="PackedScene" path="res://scenes/levels/base/base.tscn" id="1_base"]
 [ext_resource type="Shader" path="res://scenes/levels/third/forest.gdshader" id="2_forest"]
+[ext_resource type="Script" path="res://scenes/levels/base/prerendered_ground.gd" id="10_prerendered_ground"]
+[ext_resource type="Shader" path="res://scenes/levels/third/forest_tile.gdshader" id="11_forest_tile"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/mushroom/mushroom.tscn" id="3_mushroom"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/ladybug/ladybug.tscn" id="4_ladybug"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/zipper/zipper.tscn" id="5_zipper"]
@@ -9,6 +11,7 @@
 [ext_resource type="PackedScene" path="res://scenes/enemies/old_oak/old_oak.tscn" id="7_old_oak"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_forest"]
+resource_local_to_scene = true
 shader = ExtResource("2_forest")
 
 [node name="Third" instance=ExtResource("1_base")]
@@ -16,9 +19,16 @@ shader = ExtResource("2_forest")
 [node name="Stars" parent="."]
 material = SubResource("ShaderMaterial_forest")
 
+[node name="Ground" type="SubViewport" parent="." node_paths=PackedStringArray("target")]
+disable_3d = true
+size = Vector2i(1920, 4320)
+render_target_update_mode = 1
+script = ExtResource("10_prerendered_ground")
+tile_shader = ExtResource("11_forest_tile")
+target = NodePath("../Stars")
+
 [node name="ChestDrops" parent="."]
 enabled = true
-first_delay = 10.0
 
 [node name="Wave1Mushroom1" parent="Enemies" index="0" instance=ExtResource("3_mushroom")]
 position = Vector2(600, 0)
@@ -27,29 +37,73 @@ position = Vector2(600, 0)
 position = Vector2(1320, 0)
 entry_delay = 1
 
-[node name="Wave2Zipper1" parent="Enemies" index="2" instance=ExtResource("5_zipper")]
+[node name="Wave1Zipper" parent="Enemies" index="2" instance=ExtResource("5_zipper")]
+position = Vector2(960, 200)
+entry_delay = 2
+
+[node name="Wave2Zipper1" parent="Enemies" index="3" instance=ExtResource("5_zipper")]
 position = Vector2(500, 240)
+entry_delay = 12
+
+[node name="Wave2Ladybug" parent="Enemies" index="4" instance=ExtResource("4_ladybug")]
+position = Vector2(960, 0)
 entry_delay = 13
 
-[node name="Wave2Ladybug" parent="Enemies" index="3" instance=ExtResource("4_ladybug")]
-position = Vector2(960, 0)
+[node name="Wave2Slime" parent="Enemies" index="5" instance=ExtResource("6_slime")]
+position = Vector2(1400, 260)
 entry_delay = 14
 
-[node name="Wave3Mushroom" parent="Enemies" index="4" instance=ExtResource("3_mushroom")]
+[node name="Wave2Mushroom" parent="Enemies" index="6" instance=ExtResource("3_mushroom")]
+position = Vector2(300, 0)
+entry_delay = 14.5
+
+[node name="Wave3Mushroom" parent="Enemies" index="7" instance=ExtResource("3_mushroom")]
 position = Vector2(760, 0)
 entry_delay = 24
 
-[node name="Wave3Ladybug" parent="Enemies" index="5" instance=ExtResource("4_ladybug")]
+[node name="Wave3Ladybug1" parent="Enemies" index="8" instance=ExtResource("4_ladybug")]
 position = Vector2(1200, 0)
 entry_delay = 24.5
 
-[node name="Wave4Ladybug1" parent="Enemies" index="6" instance=ExtResource("4_ladybug")]
+[node name="Wave3Zipper" parent="Enemies" index="9" instance=ExtResource("5_zipper")]
+position = Vector2(1500, 220)
+entry_delay = 25
+
+[node name="Wave3Ladybug2" parent="Enemies" index="10" instance=ExtResource("4_ladybug")]
+position = Vector2(400, 0)
+entry_delay = 26
+
+[node name="Wave4Ladybug1" parent="Enemies" index="11" instance=ExtResource("4_ladybug")]
 position = Vector2(500, 0)
 entry_delay = 35
 
-[node name="Wave4Ladybug2" parent="Enemies" index="7" instance=ExtResource("4_ladybug")]
+[node name="Wave4Ladybug2" parent="Enemies" index="12" instance=ExtResource("4_ladybug")]
 position = Vector2(1420, 0)
 entry_delay = 35.5
 
-[node name="OldOak" parent="Enemies" index="8" instance=ExtResource("7_old_oak")]
+[node name="Wave4Slime" parent="Enemies" index="13" instance=ExtResource("6_slime")]
+position = Vector2(800, 240)
+entry_delay = 36
+
+[node name="Wave4Mushroom" parent="Enemies" index="14" instance=ExtResource("3_mushroom")]
+position = Vector2(1100, 0)
+entry_delay = 37
+
+[node name="Wave5Zipper1" parent="Enemies" index="15" instance=ExtResource("5_zipper")]
+position = Vector2(600, 200)
+entry_delay = 46
+
+[node name="Wave5Zipper2" parent="Enemies" index="16" instance=ExtResource("5_zipper")]
+position = Vector2(1300, 260)
+entry_delay = 46.5
+
+[node name="Wave5Mushroom" parent="Enemies" index="17" instance=ExtResource("3_mushroom")]
+position = Vector2(960, 0)
+entry_delay = 47
+
+[node name="Wave5Ladybug" parent="Enemies" index="18" instance=ExtResource("4_ladybug")]
+position = Vector2(1600, 0)
+entry_delay = 48
+
+[node name="OldOak" parent="Enemies" index="19" instance=ExtResource("7_old_oak")]
 position = Vector2(960, 300)

@@ -1,7 +1,7 @@
 extends ScriptedHeads
 
 ## Show the treasure chests: they float down, the player shoots them open, and
-## catches the boosters, among them the bubble. The level has no enemies, so it
+## catches the booster, here always the bubble. The level has no enemies, so it
 ## never ends.
 
 

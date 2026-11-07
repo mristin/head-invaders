@@ -13,14 +13,9 @@ shader = ExtResource("2_forest")
 [node name="Stars" parent="."]
 material = SubResource("ShaderMaterial_forest")
 
-[node name="SupplyDrops" parent="."]
-enabled = false
-
 [node name="Mushroom" parent="Enemies" index="0" instance=ExtResource("3_mushroom")]
 position = Vector2(700, 0)
-drop_chance = 0.0
 
 [node name="Ladybug" parent="Enemies" index="1" instance=ExtResource("4_ladybug")]
 position = Vector2(1250, 0)
 entry_delay = 1.0
-drop_chance = 0.0

@@ -15,3 +15,4 @@ material = SubResource("ShaderMaterial_forest")
 [node name="OldOak" parent="Enemies" index="0" instance=ExtResource("3_old_oak")]
 position = Vector2(960, 300)
 entry_delay = 0.5
+max_energy = 1680

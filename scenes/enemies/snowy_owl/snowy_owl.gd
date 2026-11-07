@@ -99,7 +99,7 @@ func _steer_flakes(delta: float) -> void:
     _flakes = alive
 
 
-func _start_fleeing(may_drop: bool = true) -> void:
+func _start_fleeing(beaten: bool = true) -> void:
     # NOTE (mristin):
     # The snowflakes in flight melt away with a poof.
     for flake in _flakes:
@@ -107,7 +107,7 @@ func _start_fleeing(may_drop: bool = true) -> void:
             Poof.spawn(self, flake.global_position, 18.0, Color(0.8, 0.95, 1.0))
             flake.queue_free()
     _flakes.clear()
-    super(may_drop)
+    super(beaten)
 
 
 func _draw_body(flash: float) -> void:

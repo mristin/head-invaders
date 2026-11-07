@@ -57,3 +57,9 @@ The third-party components, e.g., Godot Engine, ONNX Runtime and the head-tracki
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for how to set up the development environment, how to test the levels in isolation, and how to run the formatter, the linter and the tests.
+
+## Changelog
+
+### 1.0.0 (2026-11-07)
+
+The first version which was playable and fun back-to-back.

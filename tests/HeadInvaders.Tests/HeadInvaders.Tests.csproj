@@ -27,7 +27,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.ML.OnnxRuntime" Version="1.24.4" />
+    <!-- NOTE (mristin): Keep the same version as the game, see Head Invaders.csproj. -->
+    <PackageReference Include="Microsoft.ML.OnnxRuntime" Version="1.19.2" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.11.0" />
     <PackageReference Include="StbImageSharp" Version="2.30.16" />
     <PackageReference Include="xunit" Version="2.9.3" />

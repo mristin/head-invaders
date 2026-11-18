@@ -117,15 +117,26 @@ jobs:
           mkdir -p dist
           cp -r notices/. build/linux/
           cp -r notices/. build/windows/
+
+          # NOTE (mristin):
+          # Godot 4.6 implements no camera on Windows, so the Windows package
+          # brings CameraServerExtension along. The game loads it from the
+          # directory of the executable; see scenes/camera_extension/camera_extension.gd.
+          cp addons/CameraServerExtension/CameraServerExtension.gdextension \
+            addons/CameraServerExtension/libcameraserver-extension.windows.dll \
+            build/windows/
+          mkdir -p build/windows/licenses/camera-server-extension
+          cp addons/CameraServerExtension/LICENSE build/windows/licenses/camera-server-extension/
+
           (cd build/linux && zip -q -r "../../dist/head-invaders-${PACKAGE_VERSION}-linux-x86_64.zip" .)
           (cd build/windows && zip -q -r "../../dist/head-invaders-${PACKAGE_VERSION}-windows-x86_64.zip" .)
 
           # NOTE (mristin):
-          # Godot packs the macOS app as a zip already. Godot builds a universal
-          # app, but ONNX Runtime ships its native library only for Apple Silicon,
-          # so the head tracking does not work on Intel Macs.
-          cp build/macos/head-invaders.zip "dist/head-invaders-${PACKAGE_VERSION}-macos-apple-silicon.zip"
-          (cd notices && zip -q -r "../dist/head-invaders-${PACKAGE_VERSION}-macos-apple-silicon.zip" .)
+          # Godot packs the macOS app as a zip already. The app is universal,
+          # and ONNX Runtime 1.19 ships its native library for both the Intel
+          # and the Apple Silicon Macs.
+          cp build/macos/head-invaders.zip "dist/head-invaders-${PACKAGE_VERSION}-macos-universal.zip"
+          (cd notices && zip -q -r "../dist/head-invaders-${PACKAGE_VERSION}-macos-universal.zip" .)
 
           ls -l dist
 

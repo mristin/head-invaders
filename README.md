@@ -25,10 +25,16 @@ There are no accounts, no ads, no analytics and no telemetry.
 
 Download the game for Linux, Windows or macOS from the [releases].
 Unzip the package and start the game.
-You need a webcam which supports 640x480 in the YUYV format.
+You need a webcam; on Linux and Windows, it has to support 640x480 in the YUYV format.
 
-The macOS package runs on Apple Silicon.
-On Intel Macs, the head tracking does not work, since ONNX Runtime provides no library for them.
+Godot 4.6 has no camera on Windows, so the Windows package brings [CameraServerExtension] along.
+The macOS package runs on the Intel and the Apple Silicon Macs, from macOS 11 on.
+macOS asks for the permission to use the camera on the first start.
+The app is not notarized, so open it the first time with a right click and Open.
+
+The packages for Windows and macOS are built, but not yet tested on those systems; please report any problems.
+
+[CameraServerExtension]: https://github.com/j20001970/godot-cameraserver-extension
 
 [releases]: https://github.com/mristin/head-invaders/releases
 

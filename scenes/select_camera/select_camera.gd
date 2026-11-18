@@ -8,6 +8,9 @@ const _CAMERA_SERVER_TIMEOUT: float = 7.0
 ## Wait this long after the first feed shows up, so that the others can follow.
 const _GRACE_AFTER_FIRST_FEED: float = 1.0
 
+## The format index of a feed which lists no formats, see [method _find_format].
+const _ANY_FORMAT: int = -2
+
 var compatible_feeds: Array[FeedRecord] = []
 
 ## Play these levels instead of the game's own, e.g., from the test harness.
@@ -35,6 +38,7 @@ func _input(event):
 
 func _ready() -> void:
     CameraServer.monitoring_feeds = true
+    var extension_problem := CameraExtension.start()
 
     # NOTE (mristin):
     # The camera server enumerates the feeds asynchronously, so we poll instead of
@@ -55,27 +59,28 @@ func _ready() -> void:
 
     compatible_feeds.clear()
 
-    # Filter feeds to only include those with 640x480 YUYV format
     for i in range(CameraServer.get_feed_count()):
-        var feed = CameraServer.get_feed(i)
-        var formats = feed.get_formats()
+        var feed := CameraServer.get_feed(i)
+        var format_idx := _find_format(feed)
+        if format_idx == -1:
+            print(
+                "Skipping the feed ",
+                feed.get_name(),
+                " with the formats: ",
+                CameraExtension.get_formats(feed)
+            )
+            continue
 
-        for format_idx in range(formats.size()):
-            var format = formats[format_idx] as Dictionary
-            var width = format.get("width", 0) as int
-            var height = format.get("height", 0) as int
-            var pixel_format = format.get("format", "") as String
-
-            if width == 640 and height == 480 and pixel_format.begins_with("YUYV"):
-                print("Found compatible feed: ", feed.get_name(), " with format: ", format)
-                compatible_feeds.append(FeedRecord.new(feed, format_idx))
-                break
+        print("Found compatible feed: ", feed.get_name(), " with the format index: ", format_idx)
+        compatible_feeds.append(FeedRecord.new(feed, format_idx))
 
     spinner.visible = false
 
     if compatible_feeds.is_empty():
         if CameraServer.get_feed_count() == 0:
             status.text = "Unfortunately, there are no camera feeds."
+            if extension_problem != "":
+                status.text += "\n\n" + extension_problem
         else:
             status.text = (
                 "Unfortunately, we need the camera feed to support "
@@ -103,6 +108,34 @@ func _ready() -> void:
         camera_option.add_item(feed_record.feed.get_name())
 
 
+## Find the 640x480 YUYV format of a feed, or return -1 if there is none.
+##
+## Godot lists the formats only on Linux, and the camera extension on Windows.
+## On macOS, the feed lists no formats and runs at the resolution of the system;
+## we return [constant _ANY_FORMAT] then.
+static func _find_format(feed: CameraFeed) -> int:
+    var formats := CameraExtension.get_formats(feed)
+    if formats.is_empty():
+        return _ANY_FORMAT
+
+    for format_idx in range(formats.size()):
+        var format = formats[format_idx] as Dictionary
+        var width = format.get("width", 0) as int
+        var height = format.get("height", 0) as int
+        var pixel_format = format.get("format", "") as String
+
+        # NOTE (mristin):
+        # V4L2 on Linux calls the format YUYV, Media Foundation on Windows YUY2.
+        if (
+            width == 640
+            and height == 480
+            and (pixel_format.begins_with("YUYV") or pixel_format.begins_with("YUY2"))
+        ):
+            return format_idx
+
+    return -1
+
+
 func _on_start_button_pressed() -> void:
     var selected_index = camera_option.get_selected_id()
 
@@ -114,7 +147,8 @@ func _on_start_button_pressed() -> void:
 
 func start(feed: CameraFeed, format_index: int) -> void:
     print("Setting feed format and activating feed: ", feed.get_name())
-    feed.set_format(format_index, {})
+    if format_index != _ANY_FORMAT:
+        CameraExtension.set_format(feed, format_index)
     feed.feed_is_active = true
 
     var head_tracker: HeadTracker = (

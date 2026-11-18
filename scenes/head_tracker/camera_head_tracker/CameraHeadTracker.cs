@@ -112,6 +112,24 @@ public partial class CameraHeadTracker : Node
 
     private CameraFeed? _cameraFeed;
     private CameraTexture? _cameraTexture;
+
+    /// <summary>
+    /// The chroma plane of a feed which delivers its frames as two planes (Y and
+    /// CbCr, e.g., on macOS); <see cref="_cameraTexture"/> then holds the Y plane.
+    /// </summary>
+    private CameraTexture? _cbcrTexture;
+
+    /// <summary>The frames of a two-plane feed converted to RGB, for the overlay.</summary>
+    private ImageTexture? _ycbcrPreview;
+
+    /// <summary>Convert the two-plane frames down to at most this width.</summary>
+    private const int _maxYcbcrWidth = 640;
+
+    /// <summary>Try to activate the feed again at this time, see <see cref="RetryActivation"/>.</summary>
+    private double _nextActivationAttempt = double.NaN;
+
+    /// <summary>Try to activate an inactive feed again every this many seconds.</summary>
+    private const double _activationRetryPeriod = 3.0;
     private TextureRect _cameraPort = null!;
     private Label _status = null!;
 
@@ -159,6 +177,15 @@ public partial class CameraHeadTracker : Node
             CameraIsActive = true
         };
         _cameraPort.Texture = _cameraTexture;
+
+        _cbcrTexture = new CameraTexture
+        {
+            CameraFeedId = _cameraFeed.GetId(),
+            WhichFeed = CameraServer.FeedImage.CbcrImage,
+            CameraIsActive = true
+        };
+
+        _nextActivationAttempt = _clock.Elapsed.TotalSeconds + _activationRetryPeriod;
 
         _cameraFeed.FrameChanged += OnFrameChanged;
 
@@ -238,28 +265,100 @@ public partial class CameraHeadTracker : Node
         _inferenceThread = null;
     }
 
-    private void OnFrameChanged()
+    /// <summary>
+    /// Activate the feed again if it did not start, which happens on macOS on the
+    /// first start: the feed asks for the permission and stays off even when the
+    /// players grant it.
+    /// </summary>
+    /// <remarks>
+    /// While the system still asks, every attempt asks again, so we try only every
+    /// few seconds; Godot keeps the capture session once there is one.
+    /// </remarks>
+    private void RetryActivation()
     {
-        Image? image = _cameraTexture?.GetImage();
-        if (image == null || image.IsEmpty())
+        double now = _clock.Elapsed.TotalSeconds;
+        if (_cameraFeed == null || _cameraFeed.FeedIsActive
+            || double.IsNaN(_nextActivationAttempt) || now < _nextActivationAttempt)
         {
             return;
         }
 
-        if (image.GetFormat() != Image.Format.Rgb8)
+        _nextActivationAttempt = now + _activationRetryPeriod;
+        GD.Print(
+            "The camera did not start; trying again "
+            + "(maybe the camera permission was just granted)."
+        );
+        _cameraFeed.FeedIsActive = true;
+
+        if (_cameraTexture != null)
         {
-            image.Convert(Image.Format.Rgb8);
+            _cameraTexture.CameraIsActive = true;
+        }
+
+        if (_cbcrTexture != null)
+        {
+            _cbcrTexture.CameraIsActive = true;
+        }
+    }
+
+    private void OnFrameChanged()
+    {
+        if (_cameraTexture == null || _cameraFeed == null)
+        {
+            return;
+        }
+
+        byte[] rgb;
+        int width;
+        int height;
+
+        if (_cameraFeed.GetDatatype() == CameraFeed.FeedDataType.YcbcrSep)
+        {
+            // NOTE (mristin):
+            // A two-plane feed (e.g., on macOS) has no RGB texture, so we convert
+            // it ourselves, and display the converted frame in the overlay.
+            Image? luma = _cameraTexture.GetImage();
+            Image? chroma = _cbcrTexture?.GetImage();
+            if (luma == null || luma.IsEmpty() || chroma == null || chroma.IsEmpty())
+            {
+                return;
+            }
+
+            (rgb, width, height) = YcbcrToRgb(luma, chroma, _maxYcbcrWidth);
+
+            var preview = Image.CreateFromData(width, height, false, Image.Format.Rgb8, rgb);
+            if (_ycbcrPreview == null || _ycbcrPreview.GetSize() != preview.GetSize())
+            {
+                _ycbcrPreview = ImageTexture.CreateFromImage(preview);
+                _cameraPort.Texture = _ycbcrPreview;
+            }
+            else
+            {
+                _ycbcrPreview.Update(preview);
+            }
+        }
+        else
+        {
+            Image? image = _cameraTexture.GetImage();
+            if (image == null || image.IsEmpty())
+            {
+                return;
+            }
+
+            if (image.GetFormat() != Image.Format.Rgb8)
+            {
+                image.Convert(Image.Format.Rgb8);
+            }
+
+            rgb = image.GetData();
+            width = image.GetWidth();
+            height = image.GetHeight();
         }
 
         // NOTE (mristin):
         // We copy the raw bytes on the main thread so that the inference thread
         // never touches any engine objects.
-        var frame = new Frame(
-            image.GetData(),
-            image.GetWidth(),
-            image.GetHeight(),
-            _clock.Elapsed.TotalSeconds
-        );
+        var frame = new Frame(rgb, width, height, _clock.Elapsed.TotalSeconds);
 
         lock (_latestFrameLock)
         {
@@ -360,8 +459,34 @@ public partial class CameraHeadTracker : Node
         GD.Print("Left the inference loop.");
     }
 
+    /// <summary>Convert a Y plane and a CbCr plane of the camera to RGB8.</summary>
+    private static (byte[] Rgb, int Width, int Height) YcbcrToRgb(
+        Image luma,
+        Image chroma,
+        int maxWidth
+    )
+    {
+        if (luma.GetFormat() != Image.Format.R8)
+        {
+            luma.Convert(Image.Format.R8);
+        }
+
+        if (chroma.GetFormat() != Image.Format.Rg8)
+        {
+            chroma.Convert(Image.Format.Rg8);
+        }
+
+        return YcbcrConverter.ToRgb(
+            luma.GetData(), luma.GetWidth(), luma.GetHeight(),
+            chroma.GetData(), chroma.GetWidth(), chroma.GetHeight(),
+            maxWidth
+        );
+    }
+
     public override void _Process(double delta)
     {
+        RetryActivation();
+
         while (_events.TryDequeue(out var headEvent))
         {
             switch (headEvent.Kind)

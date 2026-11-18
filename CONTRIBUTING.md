@@ -100,7 +100,7 @@ Godot scans every directory of the project, and would otherwise try to import th
 ## Running the game
 
 Open the project in the Godot editor (Import, then select `project.godot`), and press F5.
-The game needs a webcam which supports 640x480 in the YUYV format.
+The game needs a webcam which supports 640x480 in the YUYV format (on macOS, any webcam).
 Without one, it explains the problem and quits on any key.
 
 Press Escape twice to quit.
@@ -208,8 +208,21 @@ mkdir -p build/linux
 $GODOT --headless --path . --export-release "Linux" build/linux/head-invaders.x86_64
 ```
 
-The macOS app is universal, but ONNX Runtime provides its native library only for Apple Silicon, so the head tracking does not work on Intel Macs.
-The macOS app is not notarized, so the players have to allow it in the system settings on the first start.
+### Windows and macOS
+
+* **Windows:** Godot 4.6 implements no camera on Windows, so we use [CameraServerExtension] there, and only there, from `addons/CameraServerExtension/` (the prebuilt Windows x86_64 library of its release 2026.03.27).
+  Godot reports an error on every platform which an extension lists no library for, so the directory is hidden from Godot (`.gdignore`); `CameraExtension.start` (`scenes/camera_extension/camera_extension.gd`) loads the extension itself on Windows, from the directory of the executable, or from the project in the editor.
+  Hence the publish workflow copies `CameraServerExtension.gdextension` and `libcameraserver-extension.windows.dll` next to the executable.
+  The formats of the extension's feeds are reached by name (the methods of `CameraFeed` do not reach them), and Windows calls YUYV "YUY2".
+  Drop the extension once Godot supports the camera on Windows itself ([godotengine/godot#108538]).
+* **macOS:** The app is universal and runs on the Intel and the Apple Silicon Macs.
+  We stay with ONNX Runtime 1.19, the last version whose libraries for macOS run on macOS 11 (from 1.20 on, they need macOS 13.3, and from 1.24 on, there is none for the Intel Macs).
+  The camera on macOS lists no formats and delivers its frames as two planes (Y and CbCr), which `CameraHeadTracker` converts to RGB itself (`YcbcrConverter`).
+  On the first start, macOS asks for the permission to use the camera; `CameraHeadTracker` tries again every few seconds to start the camera until the players allow it.
+  The app is signed ad hoc and not notarized, so the players open it the first time with a right click and Open.
+
+[CameraServerExtension]: https://github.com/j20001970/godot-cameraserver-extension
+[godotengine/godot#108538]: https://github.com/godotengine/godot/pull/108538
 
 ## Commit messages
 

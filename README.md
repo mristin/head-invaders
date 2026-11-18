@@ -66,6 +66,10 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for how to set up the development environ
 
 ## Changelog
 
+### 1.0.1 (2026-11-18)
+
+The game supports the camera on Windows and macOS (not yet tested on those systems), and the macOS package runs on the Intel Macs, too.
+
 ### 1.0.0 (2026-11-07)
 
 The first version which was playable and fun back-to-back.

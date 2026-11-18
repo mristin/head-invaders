@@ -32,8 +32,6 @@ The macOS package runs on the Intel and the Apple Silicon Macs, from macOS 11 on
 macOS asks for the permission to use the camera on the first start.
 The app is not notarized, so open it the first time with a right click and Open.
 
-The packages for Windows and macOS are built, but not yet tested on those systems; please report any problems.
-
 [CameraServerExtension]: https://github.com/j20001970/godot-cameraserver-extension
 
 [releases]: https://github.com/mristin/head-invaders/releases
@@ -68,7 +66,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for how to set up the development environ
 
 ### 1.0.1 (2026-11-18)
 
-The game supports the camera on Windows and macOS (not yet tested on those systems), and the macOS package runs on the Intel Macs, too.
+The game supports the camera on Windows and macOS, and the macOS package runs on the Intel Macs, too.
 
 ### 1.0.0 (2026-11-07)
 
